@@ -1,4 +1,4 @@
-package view;
+package view.tablehandlers;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -16,6 +16,7 @@ import javax.swing.table.TableColumnModel;
 import business.Manager;
 import core.Helper;
 import entity.AbstractEntity;
+import view.BaseView;
 
 public abstract class TableHandler<T extends AbstractEntity> extends JPanel {
 

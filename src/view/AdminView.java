@@ -18,6 +18,11 @@ import entity.Booking;
 import entity.Brand;
 import entity.Car;
 import entity.Model;
+import view.tablehandlers.AvailableCarsTableHandler;
+import view.tablehandlers.BookingTableHandler;
+import view.tablehandlers.BrandTableHandler;
+import view.tablehandlers.CarTableHandler;
+import view.tablehandlers.ModelTableHandler;
 
 public class AdminView extends JFrame {
     private final ModelTableHandler modelTableHandler;

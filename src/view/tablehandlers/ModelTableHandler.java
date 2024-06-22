@@ -1,9 +1,10 @@
-package view;
+package view.tablehandlers;
 
 import javax.swing.*;
 
 import business.Manager;
 import entity.Model;
+import view.ModelView;
 
 public class ModelTableHandler extends TableHandler<Model> {
 

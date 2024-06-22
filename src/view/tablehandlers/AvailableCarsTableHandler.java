@@ -1,4 +1,4 @@
-package view;
+package view.tablehandlers;
 
 import java.text.ParseException;
 
@@ -8,6 +8,8 @@ import business.Manager;
 import core.Helper;
 import entity.Booking;
 import entity.Car;
+import view.BookingView;
+import view.CarView;
 
 public class AvailableCarsTableHandler extends TableHandler<Car> {
 
@@ -23,7 +25,7 @@ public class AvailableCarsTableHandler extends TableHandler<Car> {
         super(HEADERS, table, manager, view);
     }
 
-    void addRightClickContextMenu(JTextField startDate, JTextField endDate) {
+    public void addRightClickContextMenu(JTextField startDate, JTextField endDate) {
         JMenuItem addBookingItem = new JMenuItem("Add Booking");
         getRightClickMenu().add(addBookingItem);
 
