@@ -1,6 +1,6 @@
 package entity;
 
-public class AppUser extends AbstractEntity {
+public class AppUser extends BaseEntity {
     private String username;
     private String password;
     private String role;

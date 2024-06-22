@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import core.Db;
-import entity.AbstractEntity;
+import entity.BaseEntity;
 
-public abstract class Dao<T extends AbstractEntity> {
+public abstract class Dao<T extends BaseEntity> {
 
     final Connection connection;
     private final String tableName;

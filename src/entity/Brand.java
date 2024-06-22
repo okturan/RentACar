@@ -1,6 +1,6 @@
 package entity;
 
-public class Brand extends AbstractEntity {
+public class Brand extends BaseEntity {
     private String name;
 
     public Brand() {

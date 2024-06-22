@@ -3,9 +3,9 @@ package view;
 import javax.swing.*;
 
 import core.Helper;
-import entity.AbstractEntity;
+import entity.BaseEntity;
 
-public abstract class BaseView<T extends AbstractEntity> extends Layout {
+public abstract class BaseView<T extends BaseEntity> extends Layout {
     protected JButton btn_save;
     protected JButton btn_cancel;
     protected T currentEntity;

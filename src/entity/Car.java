@@ -1,6 +1,6 @@
 package entity;
 
-public class Car extends AbstractEntity {
+public class Car extends BaseEntity {
     private Model model;
     private String color;
     private int km;

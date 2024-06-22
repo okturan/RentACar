@@ -3,9 +3,9 @@ package business;
 import java.util.ArrayList;
 
 import dao.Dao;
-import entity.AbstractEntity;
+import entity.BaseEntity;
 
-public abstract class Manager<T extends AbstractEntity> {
+public abstract class Manager<T extends BaseEntity> {
 
     final Dao<T> dao;
 

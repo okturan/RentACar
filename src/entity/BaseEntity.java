@@ -1,6 +1,6 @@
 package entity;
 
-public abstract class AbstractEntity {
+public abstract class BaseEntity {
     private int id;
 
     public int getId() {
@@ -16,7 +16,7 @@ public abstract class AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AbstractEntity that = (AbstractEntity) o;
+        BaseEntity that = (BaseEntity) o;
         return id == that.id;
     }
 

@@ -15,10 +15,10 @@ import javax.swing.table.TableColumnModel;
 
 import business.Manager;
 import core.Helper;
-import entity.AbstractEntity;
+import entity.BaseEntity;
 import view.BaseView;
 
-public abstract class TableHandler<T extends AbstractEntity> extends JPanel {
+public abstract class TableHandler<T extends BaseEntity> extends JPanel {
 
     private final String[] HEADERS;
     private final JTable table;

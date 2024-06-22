@@ -2,7 +2,7 @@ package entity;
 
 import java.util.Date;
 
-public class Booking extends AbstractEntity {
+public class Booking extends BaseEntity {
     private String customerName;
     private String customerIdNo;
     private String customerMobileNo;
