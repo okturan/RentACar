@@ -11,7 +11,6 @@ import entity.Brand;
 import entity.Model;
 
 public class ModelView extends BaseView<Model> {
-    private final ModelManager modelManager = new ModelManager();
     private final BrandManager brandManager = new BrandManager();
     private JPanel container;
     private JLabel lbl_model;
@@ -32,22 +31,15 @@ public class ModelView extends BaseView<Model> {
     private JButton btn_cancel;
 
     public ModelView() {
+        super(new ModelManager());
         this.add(container);
         this.setBtn_save(btn_save);
         this.setBtn_cancel(btn_cancel);
-        loadBrands();
-        loadEnumValues();
         initializeEventListeners();
     }
 
-    private void loadBrands() {
-        List<Brand> brands = brandManager.findAll();
-        for (Brand brand : brands) {
-            combo_brand.addItem(brand);
-        }
-    }
-
-    private void loadEnumValues() {
+    private void populateComboBoxes() {
+        brandManager.findAll().forEach(brand -> combo_brand.addItem(brand));
         combo_vehicletype.setModel(new DefaultComboBoxModel<>(Model.VehicleType.values()));
         combo_fuel.setModel(new DefaultComboBoxModel<>(Model.FuelType.values()));
         combo_transmission.setModel(new DefaultComboBoxModel<>(Model.TransmissionType.values()));
@@ -59,29 +51,26 @@ public class ModelView extends BaseView<Model> {
     }
 
     @Override
-    protected void setFields(Model model) {
+    protected Model setFields(Model model) {
+        if (model == null) {
+            model = new Model();
+        }
+
         model.setBrand((Brand) combo_brand.getSelectedItem());
         model.setName(fld_name.getText());
         model.setYear(fld_year.getText());
         model.setTransmissionType((Model.TransmissionType) combo_transmission.getSelectedItem());
         model.setFuelType((Model.FuelType) combo_fuel.getSelectedItem());
         model.setVehicleType((Model.VehicleType) combo_vehicletype.getSelectedItem());
-    }
 
-    @Override
-    protected boolean saveEntity(Model model) {
-        return currentEntity == null ? modelManager.save(model) : modelManager.update(model);
-    }
-
-    @Override
-    protected Model createNewEntityInstance() {
-        return new Model();
+        return model;
     }
 
     @Override
     public void initializeUIComponents(Model model) {
         this.guiInitialize(500, 500);
         this.currentEntity = model;
+        populateComboBoxes();
 
         fld_name.setText("");
         fld_year.setText("");

@@ -7,7 +7,6 @@ import core.Helper;
 import entity.Brand;
 
 public class BrandView extends BaseView<Brand> {
-    private final BrandManager brandManager = new BrandManager();
     private JPanel container;
     private JLabel lbl_brand;
     private JLabel lbl_brand_name;
@@ -17,6 +16,7 @@ public class BrandView extends BaseView<Brand> {
     private JButton btn_cancel;
 
     public BrandView() {
+        super(new BrandManager());
         this.add(container);
         this.setBtn_save(btn_save);
         this.setBtn_cancel(btn_cancel);
@@ -29,18 +29,14 @@ public class BrandView extends BaseView<Brand> {
     }
 
     @Override
-    protected void setFields(Brand brand) {
+    protected Brand setFields(Brand brand) {
+        if (brand == null) {
+            brand = new Brand();
+        }
+
         brand.setName(fld_brand_name.getText());
-    }
 
-    @Override
-    protected boolean saveEntity(Brand brand) {
-        return currentEntity == null ? brandManager.save(brand) : brandManager.update(brand);
-    }
-
-    @Override
-    protected Brand createNewEntityInstance() {
-        return new Brand();
+        return brand;
     }
 
     @Override

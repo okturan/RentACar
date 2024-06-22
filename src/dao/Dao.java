@@ -91,6 +91,7 @@ public abstract class Dao<T extends BaseEntity> {
                 ") VALUES (" +
                 getPlaceholders() +
                 ")";
+        System.out.println("hello" + query);
         return executeQuery(query, entity, false);
     }
 
@@ -102,6 +103,7 @@ public abstract class Dao<T extends BaseEntity> {
                 " WHERE " +
                 getIdColumnName() +
                 " = ?";
+        System.out.println(query);
         return executeQuery(query, entity, true);
     }
 

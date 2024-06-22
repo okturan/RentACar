@@ -58,7 +58,7 @@ public class AdminView extends JFrame {
     private JPanel panel_filter_models;
     private JLabel lbl_vehicletype;
     private JLabel lbl_fuel;
-    private JPanel panel_newbooking;
+    private JPanel panel_newbookings;
     private JScrollPane scroll_newbooking;
     private JTable table_newbooking;
     private JTextField fld_startdate;
@@ -74,10 +74,11 @@ public class AdminView extends JFrame {
     private JLabel lbl_fueltype;
     private JLabel lbl_filter_vehicletype;
     private JComboBox<String> combo_filter_plates;
-    private JPanel panel_booking;
+    private JPanel panel_filter_booking;
     private JButton button_filter_booking_search;
     private JButton button_filter_booking_clear;
     private JLabel lbl_filter_booking_plate;
+    private JPanel panel_filter_newbooking;
 
     public AdminView(AppUser appUser) {
         modelTableHandler = new ModelTableHandler(table_models, new ModelManager(), new ModelView());
@@ -107,7 +108,7 @@ public class AdminView extends JFrame {
         initModelFilters();
         initBookingFilters();
 
-        availableCarsTableHandler.addRightClickContextMenu(fld_startdate, fld_enddate);
+        availableCarsTableHandler.populateRightClickMenu(fld_startdate, fld_enddate);
 
         resetAvailableCarsFilters();
         filterAvailableCars();
@@ -127,13 +128,9 @@ public class AdminView extends JFrame {
             this.combo_brand.addItem(brand);
         }
 
-        button_clear.addActionListener(e -> {
-            resetModelFilters();
-        });
+        button_clear.addActionListener(e -> resetModelFilters());
 
-        button_search.addActionListener(e -> {
-            filterModels();
-        });
+        button_search.addActionListener(e -> filterModels());
     }
 
     private void filterModels() {
@@ -159,13 +156,9 @@ public class AdminView extends JFrame {
 
         combo_filter_plates.setModel(new DefaultComboBoxModel<>(plates.toArray(new String[0])));
 
-        button_filter_booking_search.addActionListener(e -> {
-            filterBookings();
-        });
+        button_filter_booking_search.addActionListener(e -> filterBookings());
 
-        button_filter_booking_clear.addActionListener(e -> {
-            resetBookingFilters();
-        });
+        button_filter_booking_clear.addActionListener(e -> resetBookingFilters());
     }
 
     private void filterBookings() {
@@ -178,7 +171,7 @@ public class AdminView extends JFrame {
         combo_filter_plates.setSelectedItem(null);
     }
 
-    // cars for booking filters
+    // available cars filters
     private void initAvailableCarsFilters() {
         this.combo_filter_vehicletype.setModel(new DefaultComboBoxModel<>(Model.VehicleType.values()));
         this.combo_filter_fueltype.setModel(new DefaultComboBoxModel<>(Model.FuelType.values()));
@@ -190,13 +183,9 @@ public class AdminView extends JFrame {
         this.fld_startdate.setText(defaultStartDate);
         this.fld_enddate.setText(defaultEndDate);
 
-        button_booking_clear.addActionListener(e -> {
-            resetAvailableCarsFilters();
-        });
+        button_booking_clear.addActionListener(e -> resetAvailableCarsFilters());
 
-        button_booking_search.addActionListener(e -> {
-            filterAvailableCars();
-        });
+        button_booking_search.addActionListener(e -> filterAvailableCars());
     }
 
     private void filterAvailableCars() {
@@ -208,8 +197,8 @@ public class AdminView extends JFrame {
         String endDateStr = fld_enddate.getText();
 
         // Parse the text into Date objects
-        Date startDate = null;
-        Date endDate = null;
+        Date startDate;
+        Date endDate;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date parsedStartDate = sdf.parse(startDateStr);
@@ -237,4 +226,5 @@ public class AdminView extends JFrame {
         this.setSize(xSize, ySize);
         this.setLocation(Helper.getLocation("x", xSize), Helper.getLocation("y", ySize));
     }
+
 }

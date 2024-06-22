@@ -85,8 +85,13 @@ public class Helper {
         return new SimpleDateFormat(DATE_PATTERN).format(date);
     }
 
-    public static Date parseDate(String dateStr) throws ParseException {
-        return new SimpleDateFormat(DATE_PATTERN).parse(dateStr);
+    public static Date parseDate(String dateStr) {
+        try {
+            return new SimpleDateFormat(DATE_PATTERN).parse(dateStr);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());;
+        }
+        return null;
     }
 
 }

@@ -13,7 +13,6 @@ import entity.Car;
 
 public class BookingView extends BaseView<Booking> {
     private final CarManager carManager;
-    private final BookingManager bookingManager;
     private JPanel container;
     private JLabel lbl_booking;
     private JLabel lbl_car_id;
@@ -42,9 +41,8 @@ public class BookingView extends BaseView<Booking> {
     private JComboBox<Car> combo_car;
 
     public BookingView() {
+        super(new BookingManager());
         this.carManager = new CarManager();
-        this.bookingManager = new BookingManager();
-        populateModelComboBox();
         this.add(container);
         this.setBtn_save(btn_save);
         this.setBtn_cancel(btn_cancel);
@@ -68,41 +66,42 @@ public class BookingView extends BaseView<Booking> {
 
     @Override
     protected boolean validateFields() {
-        return !Helper.isFieldListEmpty(fld_customer_name, fld_customer_id_no, fld_customer_mobile_no, fld_customer_email, fld_start_date, fld_end_date, fld_price);
+        return !Helper.isFieldListEmpty(
+                fld_customer_name,
+                fld_customer_id_no,
+                fld_customer_mobile_no,
+                fld_customer_email,
+                fld_start_date,
+                fld_end_date,
+                fld_price
+        );
     }
 
     @Override
-    protected void setFields(Booking booking) throws ParseException, NumberFormatException {
-        java.util.Date startDate = Helper.parseDate(fld_start_date.getText());
-        java.util.Date endDate = Helper.parseDate(fld_end_date.getText());
+    protected Booking setFields(Booking booking) throws NumberFormatException {
+        if (booking == null) {
+            booking = new Booking();
+        }
 
         booking.setCar((Car) combo_car.getSelectedItem());
         booking.setCustomerName(fld_customer_name.getText());
         booking.setCustomerIdNo(fld_customer_id_no.getText());
         booking.setCustomerMobileNo(fld_customer_mobile_no.getText());
         booking.setCustomerEmail(fld_customer_email.getText());
-        booking.setStartDate(startDate);
-        booking.setEndDate(endDate);
+        booking.setStartDate(Helper.parseDate(fld_start_date.getText()));
+        booking.setEndDate(Helper.parseDate(fld_end_date.getText()));
         booking.setBookingCase(fld_booking_case.getText());
         booking.setNotes(fld_notes.getText());
         booking.setPrice(Integer.parseInt(fld_price.getText()));
-    }
 
-    @Override
-    protected boolean saveEntity(Booking booking) {
-        return currentEntity.getId() <
-                1 ? bookingManager.save(booking) : bookingManager.update(booking);
-    }
-
-    @Override
-    protected Booking createNewEntityInstance() {
-        return new Booking();
+        return booking;
     }
 
     @Override
     public void initializeUIComponents(Booking booking) {
         this.guiInitialize(500, 500);
         this.currentEntity = booking;
+        populateModelComboBox();
 
         if (booking != null) {
             combo_car.setSelectedItem(booking.getCar());
@@ -115,8 +114,6 @@ public class BookingView extends BaseView<Booking> {
             fld_booking_case.setText(booking.getBookingCase());
             fld_notes.setText(booking.getNotes());
             fld_price.setText(String.valueOf(booking.getPrice()));
-        } else {
-            System.out.println("null book");
         }
     }
 }

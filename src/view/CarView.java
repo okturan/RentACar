@@ -11,7 +11,6 @@ import entity.Car;
 import entity.Model;
 
 public class CarView extends BaseView<Car> {
-    private final CarManager carManager = new CarManager();
     private final ModelManager modelManager = new ModelManager();
     private JPanel container;
     private JLabel lbl_car;
@@ -28,6 +27,7 @@ public class CarView extends BaseView<Car> {
     private JButton btn_cancel;
 
     public CarView() {
+        super(new CarManager());
         this.add(container);
         this.setBtn_save(btn_save);
         this.setBtn_cancel(btn_cancel);
@@ -47,28 +47,23 @@ public class CarView extends BaseView<Car> {
     }
 
     @Override
-    protected void setFields(Car car) {
+    protected Car setFields(Car car) {
+        if (car == null) {
+            car = new Car();
+        }
+
         car.setModel((Model) combo_model.getSelectedItem());
         car.setColor(fld_color.getText());
         car.setKm(Integer.parseInt(fld_km.getText()));
         car.setPlate(fld_plate.getText());
-    }
 
-    @Override
-    protected boolean saveEntity(Car car) {
-        return currentEntity == null ? carManager.save(car) : carManager.update(car);
-    }
-
-    @Override
-    protected Car createNewEntityInstance() {
-        return new Car();
+        return car;
     }
 
     @Override
     public void initializeUIComponents(Car car) {
         guiInitialize(500, 500);
         this.currentEntity = car;
-
         populateModelComboBox();
 
         if (car != null) {

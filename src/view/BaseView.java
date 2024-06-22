@@ -2,13 +2,17 @@ package view;
 
 import javax.swing.*;
 
+import business.Manager;
 import core.Helper;
 import entity.BaseEntity;
 
 public abstract class BaseView<T extends BaseEntity> extends Layout {
+    protected final Manager<T> manager;
     protected JButton btn_save;
     protected JButton btn_cancel;
     protected T currentEntity;
+
+    protected BaseView(Manager<T> manager) {this.manager = manager;}
 
     public void setBtn_save(JButton btn_save) {
         this.btn_save = btn_save;
@@ -27,22 +31,19 @@ public abstract class BaseView<T extends BaseEntity> extends Layout {
 
     protected abstract boolean validateFields();
 
-    protected abstract void setFields(T entity) throws Exception;
+    protected abstract T setFields(T entity);
 
-    protected abstract boolean saveEntity(T entity);
+    protected boolean saveEntity(T entity) {
+        System.out.println(currentEntity);
+        System.out.println(currentEntity.getId());
+        return currentEntity.getId() == 0 ? manager.save(entity) : manager.update(entity);
+    }
 
     public void save() {
         if (validateFields()) {
             boolean result;
             try {
-                if (currentEntity == null) {
-                    T newEntity = createNewEntityInstance();
-                    setFields(newEntity);
-                    result = saveEntity(newEntity);
-                } else {
-                    setFields(currentEntity);
-                    result = saveEntity(currentEntity);
-                }
+                result = saveEntity(setFields(currentEntity));
                 if (result) {
                     Helper.showMessage("done");
                     dispose();
@@ -56,6 +57,4 @@ public abstract class BaseView<T extends BaseEntity> extends Layout {
             Helper.showMessage("fill");
         }
     }
-
-    protected abstract T createNewEntityInstance();
 }

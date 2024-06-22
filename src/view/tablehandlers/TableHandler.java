@@ -17,8 +17,9 @@ import business.Manager;
 import core.Helper;
 import entity.BaseEntity;
 import view.BaseView;
+import view.Layout;
 
-public abstract class TableHandler<T extends BaseEntity> extends JPanel {
+public abstract class TableHandler<T extends BaseEntity> extends Layout {
 
     private final String[] HEADERS;
     private final JTable table;
@@ -36,13 +37,13 @@ public abstract class TableHandler<T extends BaseEntity> extends JPanel {
         this.defaultTableModel = new DefaultTableModel();
         this.table.setModel(defaultTableModel);
         this.rightClickMenu = new JPopupMenu();
+        setUpTableMouseListener();
+        setupWindowClosedListener();
     }
 
     public void initializeTable() {
         loadTable(manager.findAll());
         populateRightClickMenu();
-        setUpTableMouseListener();
-        setupWindowClosedListener();
     }
 
     private void setupWindowClosedListener() {

@@ -1,7 +1,5 @@
 package view.tablehandlers;
 
-import java.text.ParseException;
-
 import javax.swing.*;
 
 import business.Manager;
@@ -25,26 +23,17 @@ public class AvailableCarsTableHandler extends TableHandler<Car> {
         super(HEADERS, table, manager, view);
     }
 
-    public void addRightClickContextMenu(JTextField startDate, JTextField endDate) {
-        JMenuItem addBookingItem = new JMenuItem("Add Booking");
-        getRightClickMenu().add(addBookingItem);
-
-        addBookingItem.addActionListener(event -> {
-            int selectedId = Integer.parseInt(this.getTable().getValueAt(getSelectedRow(), 0).toString());
-            Car car = this.getManager().getById(selectedId);
+    public void populateRightClickMenu(JTextField fld_startDate, JTextField fld_endDate) {
+        addMenuItem("Add Booking", event -> {
+            int selectedId = Integer.parseInt(getTable().getValueAt(getSelectedRow(), 0).toString());
+            Car car = getManager().getById(selectedId);
             BookingView bookingView = new BookingView();
             Booking booking = new Booking();
-            try {
-                booking.setStartDate(Helper.parseDate(startDate.getText()));
-                booking.setEndDate(Helper.parseDate(endDate.getText()));
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-            bookingView.setVisible(true);
+
+            booking.setStartDate(Helper.parseDate(fld_startDate.getText()));
+            booking.setEndDate(Helper.parseDate(fld_endDate.getText()));
             bookingView.initializeUIComponents(booking);
             bookingView.disableFields(car);
         });
-
-        setUpTableMouseListener();
     }
 }
