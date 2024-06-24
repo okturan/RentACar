@@ -1,6 +1,5 @@
 package view;
 
-import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.*;
@@ -56,9 +55,7 @@ public class BookingView extends BaseView<Booking> {
         }
     }
 
-    public void disableFields(Car car) {
-        combo_car.removeAllItems();
-        combo_car.addItem(car);
+    public void disableFields() {
         combo_car.setEnabled(false);
         fld_start_date.setEnabled(false);
         fld_end_date.setEnabled(false);
@@ -82,7 +79,6 @@ public class BookingView extends BaseView<Booking> {
         if (booking == null) {
             booking = new Booking();
         }
-
         booking.setCar((Car) combo_car.getSelectedItem());
         booking.setCustomerName(fld_customer_name.getText());
         booking.setCustomerIdNo(fld_customer_id_no.getText());
@@ -93,7 +89,6 @@ public class BookingView extends BaseView<Booking> {
         booking.setBookingCase(fld_booking_case.getText());
         booking.setNotes(fld_notes.getText());
         booking.setPrice(Integer.parseInt(fld_price.getText()));
-
         return booking;
     }
 

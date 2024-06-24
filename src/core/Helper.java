@@ -89,7 +89,7 @@ public class Helper {
         try {
             return new SimpleDateFormat(DATE_PATTERN).parse(dateStr);
         } catch (ParseException e) {
-            System.out.println(e.getMessage());;
+            System.out.println(e.getMessage());
         }
         return null;
     }

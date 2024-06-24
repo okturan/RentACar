@@ -33,9 +33,7 @@ public class BrandView extends BaseView<Brand> {
         if (brand == null) {
             brand = new Brand();
         }
-
         brand.setName(fld_brand_name.getText());
-
         return brand;
     }
 

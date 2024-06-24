@@ -24,37 +24,26 @@ public abstract class BaseView<T extends BaseEntity> extends Layout {
 
     public abstract void initializeUIComponents(T entity);
 
-    protected void initializeEventListeners() {
-        btn_cancel.addActionListener(e -> dispose());
-        btn_save.addActionListener(e -> save());
-    }
-
     protected abstract boolean validateFields();
 
     protected abstract T setFields(T entity);
 
-    protected boolean saveEntity(T entity) {
-        System.out.println(currentEntity);
-        System.out.println(currentEntity.getId());
-        return currentEntity.getId() == 0 ? manager.save(entity) : manager.update(entity);
-    }
-
-    public void save() {
+    protected void save() {
         if (validateFields()) {
-            boolean result;
-            try {
-                result = saveEntity(setFields(currentEntity));
-                if (result) {
-                    Helper.showMessage("done");
-                    dispose();
-                } else {
-                    Helper.showMessage("error");
-                }
-            } catch (Exception e) {
-                Helper.showMessage(e.getMessage());
+            currentEntity = setFields(currentEntity);
+            if (currentEntity.getId() == 0) {
+                Helper.showMessage(manager.save(currentEntity) ? "Save Successful" : "Save Error: Erroneous entry");
+            } else {
+                Helper.showMessage(manager.update(currentEntity) ? "Update Successful" : "Update Error: Erroneous entry");
             }
+            dispose();
         } else {
             Helper.showMessage("fill");
         }
+    }
+
+    protected void initializeEventListeners() {
+        btn_cancel.addActionListener(e -> dispose());
+        btn_save.addActionListener(e -> save());
     }
 }

@@ -27,7 +27,7 @@ public class BookingTableHandler extends TableHandler<Booking> {
     }
 
     @Override
-    protected void populateRightClickMenu() {
+    public void populateRightClickMenu() {
         addMenuItem("Edit", handleEdit());
         addMenuItem("Delete", e -> handleDelete());
     }

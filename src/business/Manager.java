@@ -15,7 +15,6 @@ public abstract class Manager<T extends BaseEntity> {
 
     public boolean save(T entity) {
         if (getId(entity) != 0) {
-            core.Helper.showMessage("Erroneous entry");
             return false;
         }
         return dao.save(entity);
@@ -23,7 +22,6 @@ public abstract class Manager<T extends BaseEntity> {
 
     public boolean update(T entity) {
         if (dao.findById(getId(entity)) == null) {
-            core.Helper.showMessage("Not found");
             return false;
         }
         return dao.update(entity);
@@ -31,7 +29,6 @@ public abstract class Manager<T extends BaseEntity> {
 
     public boolean delete(int id) {
         if (dao.findById(id) == null) {
-            core.Helper.showMessage("Not found");
             return false;
         }
         return dao.delete(id);

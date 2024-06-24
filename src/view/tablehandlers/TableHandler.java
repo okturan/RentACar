@@ -37,7 +37,7 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
         this.defaultTableModel = new DefaultTableModel();
         this.table.setModel(defaultTableModel);
         this.rightClickMenu = new JPopupMenu();
-        setUpTableMouseListener();
+        setupTableMouseListener();
         setupWindowClosedListener();
     }
 
@@ -55,7 +55,7 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
         });
     }
 
-    void setUpTableMouseListener() {
+    void setupTableMouseListener() {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -99,7 +99,7 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
                 Helper.showMessage("done");
                 loadTable(manager.findAll());
             } else {
-                Helper.showMessage("error");
+                core.Helper.showMessage("Delete Error: Record Not found");
             }
         }
     }
@@ -155,10 +155,6 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
 
     public Manager<T> getManager() {
         return manager;
-    }
-
-    public JPopupMenu getRightClickMenu() {
-        return rightClickMenu;
     }
 
     public BaseView<T> getView() {

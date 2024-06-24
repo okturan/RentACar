@@ -1,7 +1,5 @@
 package view;
 
-import java.util.List;
-
 import javax.swing.*;
 
 import business.BrandManager;
@@ -10,7 +8,7 @@ import core.Helper;
 import entity.Brand;
 import entity.Model;
 
-public class ModelView extends BaseView<Model> {
+public class ModelUpdateView extends BaseView<Model> {
     private final BrandManager brandManager = new BrandManager();
     private JPanel container;
     private JLabel lbl_model;
@@ -30,7 +28,7 @@ public class ModelView extends BaseView<Model> {
     private JPanel pnl_action;
     private JButton btn_cancel;
 
-    public ModelView() {
+    public ModelUpdateView() {
         super(new ModelManager());
         this.add(container);
         this.setBtn_save(btn_save);
@@ -55,14 +53,12 @@ public class ModelView extends BaseView<Model> {
         if (model == null) {
             model = new Model();
         }
-
         model.setBrand((Brand) combo_brand.getSelectedItem());
         model.setName(fld_name.getText());
         model.setYear(fld_year.getText());
         model.setTransmissionType((Model.TransmissionType) combo_transmission.getSelectedItem());
         model.setFuelType((Model.FuelType) combo_fuel.getSelectedItem());
         model.setVehicleType((Model.VehicleType) combo_vehicletype.getSelectedItem());
-
         return model;
     }
 

@@ -51,12 +51,10 @@ public class CarView extends BaseView<Car> {
         if (car == null) {
             car = new Car();
         }
-
         car.setModel((Model) combo_model.getSelectedItem());
         car.setColor(fld_color.getText());
         car.setKm(Integer.parseInt(fld_km.getText()));
         car.setPlate(fld_plate.getText());
-
         return car;
     }
 

@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import business.Manager;
 import entity.Model;
-import view.ModelView;
+import view.ModelUpdateView;
 
 public class ModelTableHandler extends TableHandler<Model> {
 
@@ -18,7 +18,7 @@ public class ModelTableHandler extends TableHandler<Model> {
             "Vehicle Type"
     };
 
-    public ModelTableHandler(JTable table, Manager<Model> manager, ModelView view) {
+    public ModelTableHandler(JTable table, Manager<Model> manager, ModelUpdateView view) {
         super(HEADERS, table, manager, view);
     }
 
