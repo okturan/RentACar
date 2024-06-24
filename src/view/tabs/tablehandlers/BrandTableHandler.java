@@ -1,10 +1,10 @@
-package view.tablehandlers;
+package view.tabs.tablehandlers;
 
 import javax.swing.*;
 
 import business.Manager;
 import entity.Brand;
-import view.brand.BrandUpdateView;
+import view.tabs.brand.BrandUpdateView;
 
 public class BrandTableHandler extends TableHandler<Brand> {
 

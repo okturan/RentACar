@@ -1,4 +1,4 @@
-package view.newbooking;
+package view.tabs.newbooking;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -10,8 +10,8 @@ import javax.swing.*;
 import business.CarManager;
 import entity.Car;
 import entity.Model;
-import view.car.CarUpdateView;
-import view.tablehandlers.AvailableCarsTableHandler;
+import view.tabs.car.CarUpdateView;
+import view.tabs.tablehandlers.AvailableCarsTableHandler;
 
 public class NewBookingTabView extends JPanel {
     private final AvailableCarsTableHandler availableCarsTableHandler;

@@ -1,4 +1,4 @@
-package view.tablehandlers;
+package view.tabs.tablehandlers;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -16,7 +16,7 @@ import javax.swing.table.TableColumnModel;
 import business.Manager;
 import core.Helper;
 import entity.BaseEntity;
-import view.BaseView;
+import view.tabs.BaseUpdateView;
 import view.Layout;
 
 public abstract class TableHandler<T extends BaseEntity> extends Layout {
@@ -25,11 +25,11 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
     private final JTable table;
     private final Manager<T> manager;
     private final DefaultTableModel defaultTableModel;
-    private final BaseView<T> view;
+    private final BaseUpdateView<T> view;
     private final JPopupMenu rightClickMenu;
     private int selectedRow = -1;
 
-    public TableHandler(String[] headers, JTable table, Manager<T> manager, BaseView<T> view) {
+    public TableHandler(String[] headers, JTable table, Manager<T> manager, BaseUpdateView<T> view) {
         this.HEADERS = headers;
         this.table = table;
         this.manager = manager;
@@ -157,7 +157,7 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
         return manager;
     }
 
-    public BaseView<T> getView() {
+    public BaseUpdateView<T> getView() {
         return view;
     }
 }

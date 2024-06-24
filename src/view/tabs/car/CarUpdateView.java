@@ -1,4 +1,4 @@
-package view.car;
+package view.tabs.car;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import business.ModelManager;
 import core.Helper;
 import entity.Car;
 import entity.Model;
-import view.BaseView;
+import view.tabs.BaseUpdateView;
 
-public class CarUpdateView extends BaseView<Car> {
+public class CarUpdateView extends BaseUpdateView<Car> {
     private final ModelManager modelManager = new ModelManager();
     private JPanel container;
     private JLabel lbl_car;

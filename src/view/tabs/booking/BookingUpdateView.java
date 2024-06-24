@@ -1,4 +1,4 @@
-package view.booking;
+package view.tabs.booking;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import business.CarManager;
 import core.Helper;
 import entity.Booking;
 import entity.Car;
-import view.BaseView;
+import view.tabs.BaseUpdateView;
 
-public class BookingUpdateView extends BaseView<Booking> {
+public class BookingUpdateView extends BaseUpdateView<Booking> {
     private final CarManager carManager;
     private JPanel container;
     private JLabel lbl_booking;

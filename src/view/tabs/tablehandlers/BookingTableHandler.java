@@ -1,10 +1,10 @@
-package view.tablehandlers;
+package view.tabs.tablehandlers;
 
 import javax.swing.*;
 
 import business.Manager;
 import entity.Booking;
-import view.booking.BookingUpdateView;
+import view.tabs.booking.BookingUpdateView;
 
 public class BookingTableHandler extends TableHandler<Booking> {
 

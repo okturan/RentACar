@@ -1,9 +1,9 @@
-package view.car;
+package view.tabs.car;
 
 import javax.swing.*;
 
 import business.CarManager;
-import view.tablehandlers.CarTableHandler;
+import view.tabs.tablehandlers.CarTableHandler;
 
 public class CarTabView extends JPanel {
     private JPanel panel_cars;

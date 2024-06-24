@@ -1,4 +1,4 @@
-package view.model;
+package view.tabs.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import business.BrandManager;
 import business.ModelManager;
 import entity.Brand;
 import entity.Model;
-import view.tablehandlers.ModelTableHandler;
+import view.tabs.tablehandlers.ModelTableHandler;
 
 public class ModelTabView extends JPanel {
     private final ModelTableHandler modelTableHandler;

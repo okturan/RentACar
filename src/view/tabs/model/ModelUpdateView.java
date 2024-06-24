@@ -1,4 +1,4 @@
-package view.model;
+package view.tabs.model;
 
 import javax.swing.*;
 
@@ -7,9 +7,9 @@ import business.ModelManager;
 import core.Helper;
 import entity.Brand;
 import entity.Model;
-import view.BaseView;
+import view.tabs.BaseUpdateView;
 
-public class ModelUpdateView extends BaseView<Model> {
+public class ModelUpdateView extends BaseUpdateView<Model> {
     private final BrandManager brandManager = new BrandManager();
     private JPanel container;
     private JLabel lbl_model;

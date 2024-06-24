@@ -1,9 +1,9 @@
-package view.brand;
+package view.tabs.brand;
 
 import javax.swing.*;
 
 import business.BrandManager;
-import view.tablehandlers.BrandTableHandler;
+import view.tabs.tablehandlers.BrandTableHandler;
 
 public class BrandTabView extends JPanel {
     private final BrandTableHandler brandTableHandler;

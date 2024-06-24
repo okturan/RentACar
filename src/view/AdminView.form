@@ -58,9 +58,9 @@
             <properties/>
             <border type="none"/>
             <children>
-              <nested-form id="24474" form-file="view/newbooking/NewBookingTabView.form" binding="newbooking_tab">
+              <nested-form id="24474" form-file="view/tabs/newbooking/NewBookingTabView.form" binding="newbooking_tab">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </nested-form>
             </children>
@@ -73,9 +73,9 @@
             <properties/>
             <border type="none"/>
             <children>
-              <nested-form id="78235" form-file="view/booking/BookingTabView.form" binding="bookings_tab">
+              <nested-form id="78235" form-file="view/tabs/booking/BookingTabView.form" binding="bookings_tab">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </nested-form>
             </children>
@@ -88,9 +88,9 @@
             <properties/>
             <border type="none"/>
             <children>
-              <nested-form id="69201" form-file="view/brand/BrandTabView.form" binding="brands_tab">
+              <nested-form id="69201" form-file="view/tabs/brand/BrandTabView.form" binding="brands_tab">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </nested-form>
             </children>
@@ -103,7 +103,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <nested-form id="16d0a" form-file="view/model/ModelTabView.form" binding="models_tab">
+              <nested-form id="16d0a" form-file="view/tabs/model/ModelTabView.form" binding="models_tab">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -118,9 +118,9 @@
             <properties/>
             <border type="none"/>
             <children>
-              <nested-form id="31da6" form-file="view/car/CarTabView.form" binding="cars_tab">
+              <nested-form id="31da6" form-file="view/tabs/car/CarTabView.form" binding="cars_tab">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </nested-form>
             </children>

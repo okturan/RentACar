@@ -1,10 +1,10 @@
-package view.tablehandlers;
+package view.tabs.tablehandlers;
 
 import javax.swing.*;
 
 import business.Manager;
 import entity.Car;
-import view.car.CarUpdateView;
+import view.tabs.car.CarUpdateView;
 
 public class CarTableHandler extends TableHandler<Car> {
 

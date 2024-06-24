@@ -1,13 +1,12 @@
-package view.tablehandlers;
-
+package view.tabs.tablehandlers;
 
 import javax.swing.*;
 
 import business.Manager;
 import entity.Booking;
 import entity.Car;
-import view.booking.BookingUpdateView;
-import view.car.CarUpdateView;
+import view.tabs.booking.BookingUpdateView;
+import view.tabs.car.CarUpdateView;
 
 public class AvailableCarsTableHandler extends TableHandler<Car> {
 

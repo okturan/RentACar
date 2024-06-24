@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.booking.BookingUpdateView">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.tabs.booking.BookingUpdateView">
   <grid id="27dc6" binding="container" layout-manager="GridLayoutManager" row-count="12" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
@@ -55,7 +55,9 @@
       </component>
       <component id="5ca9a" class="javax.swing.JLabel" binding="lbl_customer_mobile_no">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="126" height="33"/>
+          </grid>
         </constraints>
         <properties>
           <text value="Customer Mobile No"/>
@@ -63,7 +65,9 @@
       </component>
       <component id="c95be" class="javax.swing.JTextField" binding="fld_customer_mobile_no">
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="49" height="33"/>
+          </grid>
         </constraints>
         <properties/>
       </component>

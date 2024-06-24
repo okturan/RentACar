@@ -1,18 +1,19 @@
-package view;
+package view.tabs;
 
 import javax.swing.*;
 
 import business.Manager;
 import core.Helper;
 import entity.BaseEntity;
+import view.Layout;
 
-public abstract class BaseView<T extends BaseEntity> extends Layout {
+public abstract class BaseUpdateView<T extends BaseEntity> extends Layout {
     protected final Manager<T> manager;
     protected JButton btn_save;
     protected JButton btn_cancel;
     protected T currentEntity;
 
-    protected BaseView(Manager<T> manager) {this.manager = manager;}
+    protected BaseUpdateView(Manager<T> manager) {this.manager = manager;}
 
     public void setBtn_save(JButton btn_save) {
         this.btn_save = btn_save;

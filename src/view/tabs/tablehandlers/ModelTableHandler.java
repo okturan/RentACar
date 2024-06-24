@@ -1,10 +1,10 @@
-package view.tablehandlers;
+package view.tabs.tablehandlers;
 
 import javax.swing.*;
 
 import business.Manager;
 import entity.Model;
-import view.model.ModelUpdateView;
+import view.tabs.model.ModelUpdateView;
 
 public class ModelTableHandler extends TableHandler<Model> {
 

@@ -1,4 +1,4 @@
-package view.booking;
+package view.tabs.booking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import business.BookingManager;
 import entity.Booking;
-import view.tablehandlers.BookingTableHandler;
+import view.tabs.tablehandlers.BookingTableHandler;
 
 public class BookingTabView extends JPanel {
     private final BookingTableHandler bookingTableHandler;
