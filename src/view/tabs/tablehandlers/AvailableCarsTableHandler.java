@@ -4,11 +4,10 @@ package view.tablehandlers;
 import javax.swing.*;
 
 import business.Manager;
-import core.Helper;
 import entity.Booking;
 import entity.Car;
-import view.BookingView;
-import view.CarView;
+import view.booking.BookingUpdateView;
+import view.car.CarUpdateView;
 
 public class AvailableCarsTableHandler extends TableHandler<Car> {
 
@@ -20,7 +19,7 @@ public class AvailableCarsTableHandler extends TableHandler<Car> {
             "Plate"
     };
 
-    public AvailableCarsTableHandler(JTable table, Manager<Car> manager, CarView view) {
+    public AvailableCarsTableHandler(JTable table, Manager<Car> manager, CarUpdateView view) {
         super(HEADERS, table, manager, view);
     }
 
@@ -28,15 +27,15 @@ public class AvailableCarsTableHandler extends TableHandler<Car> {
         addMenuItem("Add Booking", event -> {
             int selectedId = Integer.parseInt(getTable().getValueAt(getSelectedRow(), 0).toString());
             Car car = getManager().getById(selectedId);
-            BookingView bookingView = new BookingView();
+            BookingUpdateView bookingUpdateView = new BookingUpdateView();
             Booking booking = new Booking();
 
             booking.setCar(car);
 //            booking.setStartDate(Helper.parseDate(fld_startDate.getText()));
 //            booking.setEndDate(Helper.parseDate(fld_endDate.getText()));
 
-            bookingView.initializeUIComponents(booking);
-            bookingView.disableFields();
+            bookingUpdateView.initializeUIComponents(booking);
+            bookingUpdateView.disableFields();
         });
     }
 }

@@ -1,4 +1,4 @@
-package view;
+package view.car;
 
 import java.util.List;
 
@@ -9,8 +9,9 @@ import business.ModelManager;
 import core.Helper;
 import entity.Car;
 import entity.Model;
+import view.BaseView;
 
-public class CarView extends BaseView<Car> {
+public class CarUpdateView extends BaseView<Car> {
     private final ModelManager modelManager = new ModelManager();
     private JPanel container;
     private JLabel lbl_car;
@@ -26,7 +27,7 @@ public class CarView extends BaseView<Car> {
     private JPanel pnl_action;
     private JButton btn_cancel;
 
-    public CarView() {
+    public CarUpdateView() {
         super(new CarManager());
         this.add(container);
         this.setBtn_save(btn_save);

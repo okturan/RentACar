@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import business.Manager;
 import entity.Brand;
-import view.BrandView;
+import view.brand.BrandUpdateView;
 
 public class BrandTableHandler extends TableHandler<Brand> {
 
@@ -13,7 +13,7 @@ public class BrandTableHandler extends TableHandler<Brand> {
             "Brand"
     };
 
-    public BrandTableHandler(JTable table, Manager<Brand> manager, BrandView view) {
+    public BrandTableHandler(JTable table, Manager<Brand> manager, BrandUpdateView view) {
         super(HEADERS, table, manager, view);
     }
 

@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import business.Manager;
 import entity.Car;
-import view.CarView;
+import view.car.CarUpdateView;
 
 public class CarTableHandler extends TableHandler<Car> {
 
@@ -16,7 +16,7 @@ public class CarTableHandler extends TableHandler<Car> {
             "Plate"
     };
 
-    public CarTableHandler(JTable table, Manager<Car> manager, CarView view) {
+    public CarTableHandler(JTable table, Manager<Car> manager, CarUpdateView view) {
         super(HEADERS, table, manager, view);
     }
 

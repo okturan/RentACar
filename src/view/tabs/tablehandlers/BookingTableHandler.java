@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import business.Manager;
 import entity.Booking;
-import view.BookingView;
+import view.booking.BookingUpdateView;
 
 public class BookingTableHandler extends TableHandler<Booking> {
 
@@ -22,7 +22,7 @@ public class BookingTableHandler extends TableHandler<Booking> {
             "Price"
     };
 
-    public BookingTableHandler(JTable table, Manager<Booking> manager, BookingView view) {
+    public BookingTableHandler(JTable table, Manager<Booking> manager, BookingUpdateView view) {
         super(HEADERS, table, manager, view);
     }
 

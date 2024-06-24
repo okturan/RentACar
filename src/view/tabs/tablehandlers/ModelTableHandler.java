@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import business.Manager;
 import entity.Model;
-import view.ModelUpdateView;
+import view.model.ModelUpdateView;
 
 public class ModelTableHandler extends TableHandler<Model> {
 

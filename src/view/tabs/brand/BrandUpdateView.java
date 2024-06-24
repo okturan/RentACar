@@ -1,12 +1,13 @@
-package view;
+package view.brand;
 
 import javax.swing.*;
 
 import business.BrandManager;
 import core.Helper;
 import entity.Brand;
+import view.BaseView;
 
-public class BrandView extends BaseView<Brand> {
+public class BrandUpdateView extends BaseView<Brand> {
     private JPanel container;
     private JLabel lbl_brand;
     private JLabel lbl_brand_name;
@@ -15,7 +16,7 @@ public class BrandView extends BaseView<Brand> {
     private JPanel pnl_action;
     private JButton btn_cancel;
 
-    public BrandView() {
+    public BrandUpdateView() {
         super(new BrandManager());
         this.add(container);
         this.setBtn_save(btn_save);

@@ -1,4 +1,4 @@
-package view;
+package view.booking;
 
 import java.util.List;
 
@@ -9,8 +9,9 @@ import business.CarManager;
 import core.Helper;
 import entity.Booking;
 import entity.Car;
+import view.BaseView;
 
-public class BookingView extends BaseView<Booking> {
+public class BookingUpdateView extends BaseView<Booking> {
     private final CarManager carManager;
     private JPanel container;
     private JLabel lbl_booking;
@@ -39,7 +40,7 @@ public class BookingView extends BaseView<Booking> {
     private JButton btn_cancel;
     private JComboBox<Car> combo_car;
 
-    public BookingView() {
+    public BookingUpdateView() {
         super(new BookingManager());
         this.carManager = new CarManager();
         this.add(container);

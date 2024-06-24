@@ -1,4 +1,4 @@
-package view;
+package view.model;
 
 import javax.swing.*;
 
@@ -7,6 +7,7 @@ import business.ModelManager;
 import core.Helper;
 import entity.Brand;
 import entity.Model;
+import view.BaseView;
 
 public class ModelUpdateView extends BaseView<Model> {
     private final BrandManager brandManager = new BrandManager();
