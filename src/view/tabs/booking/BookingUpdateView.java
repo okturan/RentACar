@@ -109,6 +109,7 @@ public class BookingUpdateView extends BaseUpdateView<Booking, BookingManager> {
             fld_end_date.setText(Helper.formatDate(booking.getEndDate()));
             fld_booking_case.setText(booking.getBookingCase());
             fld_notes.setText(booking.getNotes());
+            System.out.println(booking.getPrice());
             fld_price.setText(String.valueOf(booking.getPrice()));
         }
     }

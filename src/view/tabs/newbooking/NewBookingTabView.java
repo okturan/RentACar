@@ -70,13 +70,17 @@ public class NewBookingTabView extends JPanel {
 
         fld_newbooking_startdate.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {filterCriteria.setStartDate(Helper.parseDate(fld_newbooking_startdate.getText()));}
+
             public void removeUpdate(DocumentEvent e) {}
+
             public void changedUpdate(DocumentEvent e) {}
         });
 
         fld_newbooking_enddate.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {filterCriteria.setEndDate(Helper.parseDate(fld_newbooking_enddate.getText()));}
+
             public void removeUpdate(DocumentEvent e) {}
+
             public void changedUpdate(DocumentEvent e) {}
         });
 

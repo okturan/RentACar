@@ -1,7 +1,5 @@
 package view.tabs.model;
 
-import java.util.List;
-
 import javax.swing.*;
 
 import business.BrandManager;

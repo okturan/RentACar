@@ -5,7 +5,6 @@ import javax.swing.*;
 import business.AppUserManager;
 import entity.AppUser;
 
-
 public class LoginView extends BaseLayout {
     private final AppUserManager appUserManager;
     private JPanel container;
