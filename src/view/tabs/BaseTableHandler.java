@@ -15,20 +15,13 @@ import javax.swing.table.TableColumnModel;
 
 import business.BaseManager;
 import core.Helper;
-import dao.BaseDao;
 import entity.BaseEntity;
 import view.BaseLayout;
 
 public abstract class BaseTableHandler<
         E extends BaseEntity,
-        M extends BaseManager<E, ?>,
-        V extends BaseUpdateView<
-                ? extends BaseEntity,
-                ? extends BaseManager<
-                        ? extends BaseEntity,
-                        ? extends BaseDao<? extends BaseEntity>
-                        >
-                >
+        M extends BaseManager<E>,
+        V extends BaseUpdateView<? extends BaseEntity>
         > extends BaseLayout {
 
     private final String[] HEADERS;
@@ -105,7 +98,7 @@ public abstract class BaseTableHandler<
             E entity = this.getManager().getById(selectedId);
 
             view = createViewInstance();
-            ((BaseUpdateView<E, ?>) getView()).initializeUIComponents(entity);
+            ((BaseUpdateView<E>) getView()).initializeUIComponents(entity);
             setupWindowClosedListener();
         };
     }

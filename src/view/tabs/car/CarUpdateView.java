@@ -11,7 +11,7 @@ import entity.Car;
 import entity.Model;
 import view.tabs.BaseUpdateView;
 
-public class CarUpdateView extends BaseUpdateView<Car, CarManager> {
+public class CarUpdateView extends BaseUpdateView<Car> {
     private final ModelManager modelManager = new ModelManager();
     private JPanel container;
     private JLabel lbl_car;

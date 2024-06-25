@@ -6,7 +6,7 @@ import dao.ModelDao;
 import entity.Brand;
 import entity.Model;
 
-public class ModelManager extends BaseManager<Model, ModelDao> {
+public class ModelManager extends BaseManager<Model> {
 
     public ModelManager() {
         super(new ModelDao());

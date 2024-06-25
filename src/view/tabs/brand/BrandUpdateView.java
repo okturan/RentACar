@@ -7,7 +7,7 @@ import core.Helper;
 import entity.Brand;
 import view.tabs.BaseUpdateView;
 
-public class BrandUpdateView extends BaseUpdateView<Brand, BrandManager> {
+public class BrandUpdateView extends BaseUpdateView<Brand> {
     private JPanel container;
     private JLabel lbl_brand;
     private JLabel lbl_brand_name;

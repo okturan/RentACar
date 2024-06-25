@@ -8,7 +8,7 @@ import dao.CarDao;
 import entity.Booking;
 import entity.Car;
 
-public class BookingManager extends BaseManager<Booking, BookingDao> {
+public class BookingManager extends BaseManager<Booking> {
 
     public BookingManager() {
         super(new BookingDao());

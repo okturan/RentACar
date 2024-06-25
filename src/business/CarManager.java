@@ -7,7 +7,7 @@ import dao.CarDao;
 import entity.Car;
 import entity.Model;
 
-public class CarManager extends BaseManager<Car, CarDao> {
+public class CarManager extends BaseManager<Car> {
 
     public CarManager() {
         super(new CarDao());

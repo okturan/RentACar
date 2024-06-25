@@ -9,16 +9,15 @@ import entity.BaseEntity;
 import view.BaseLayout;
 
 public abstract class BaseUpdateView<
-        E extends BaseEntity,
-        M extends BaseManager<E, ? extends BaseDao<E>>
+        E extends BaseEntity
         > extends BaseLayout {
 
-    protected final M manager;
+    protected final BaseManager<E> manager;
     protected JButton btn_save;
     protected JButton btn_cancel;
     protected E currentEntity;
 
-    protected BaseUpdateView(M manager) {
+    protected BaseUpdateView(BaseManager<E> manager) {
         this.manager = manager;
     }
 

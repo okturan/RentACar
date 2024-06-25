@@ -9,7 +9,7 @@ import entity.Brand;
 import entity.Model;
 import view.tabs.BaseUpdateView;
 
-public class ModelUpdateView extends BaseUpdateView<Model, ModelManager> {
+public class ModelUpdateView extends BaseUpdateView<Model> {
     private final BrandManager brandManager = new BrandManager();
     private JPanel container;
     private JLabel lbl_model;

@@ -6,13 +6,12 @@ import dao.BaseDao;
 import entity.BaseEntity;
 
 public abstract class BaseManager<
-        E extends BaseEntity,
-        D extends BaseDao<E>
+        E extends BaseEntity
         > {
 
-    final D baseDao;
+    final BaseDao<E> baseDao;
 
-    public BaseManager(D baseDao) {
+    public BaseManager(BaseDao<E> baseDao) {
         this.baseDao = baseDao;
     }
 
