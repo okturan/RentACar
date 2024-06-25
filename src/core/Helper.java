@@ -73,12 +73,22 @@ public class Helper {
     }
 
 
-    public static int getLocation(String type, int size) {
-        return switch (type) {
-            case "x" -> (Toolkit.getDefaultToolkit().getScreenSize().width - size) / 2;
-            case "y" -> (Toolkit.getDefaultToolkit().getScreenSize().height - size) / 2;
-            default -> 0;
-        };
+    public static Point getCenteredLocation(int xSize, int ySize) {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] screens = ge.getScreenDevices();
+
+        Rectangle screenBounds;
+        if (screens.length > 1) {
+            // Use the second screen if available
+            screenBounds = screens[1].getDefaultConfiguration().getBounds();
+        } else {
+            // Fallback to the primary screen
+            screenBounds = screens[0].getDefaultConfiguration().getBounds();
+        }
+
+        int x = screenBounds.x + (screenBounds.width - xSize) / 2;
+        int y = screenBounds.y + (screenBounds.height - ySize) / 2;
+        return new Point(x, y);
     }
 
     public static String formatDate(Date date) {

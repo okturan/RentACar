@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import business.BaseManager;
 import core.Helper;
-import dao.BaseDao;
 import entity.BaseEntity;
 import view.BaseLayout;
 

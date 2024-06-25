@@ -34,7 +34,7 @@ public class AdminView extends BaseLayout {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setTitle("admin");
-        guiInitialize(700, 700);
+        guiInitialize(900, 600);
 
         if (appUser == null) {
             dispose();

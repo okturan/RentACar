@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import dao.BaseDao;
 import entity.BaseEntity;
 
-public abstract class BaseManager<
-        E extends BaseEntity
-        > {
+public abstract class BaseManager<E extends BaseEntity> {
 
     final BaseDao<E> baseDao;
 

@@ -14,8 +14,7 @@ public class BookingTableHandler extends BaseTableHandler<Booking, BookingManage
     private static final String[] HEADERS = {
             "id",
             "License Plate",
-            "Car Brand",
-            "Car Model",
+            "Car",
             "Customer Name",
             "Phone",
             "Email",

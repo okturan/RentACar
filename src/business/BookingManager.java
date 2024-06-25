@@ -20,7 +20,6 @@ public class BookingManager extends BaseManager<Booking> {
             Object[] rowObject = new Object[]{
                     booking.getId(),
                     booking.getCar().getPlate(),
-                    booking.getCar().getModel().getBrand(),
                     booking.getCar().getModel(),
                     booking.getCustomerName(),
                     booking.getCustomerMobileNo(),
@@ -43,7 +42,6 @@ public class BookingManager extends BaseManager<Booking> {
         for (Car car : cars) {
             licensePlates.add(car.getPlate());
         }
-
         return licensePlates;
     }
 
