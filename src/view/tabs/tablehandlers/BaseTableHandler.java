@@ -13,23 +13,34 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-import business.Manager;
+import business.BaseManager;
 import core.Helper;
+import dao.BaseDao;
 import entity.BaseEntity;
-import view.tabs.BaseUpdateView;
 import view.Layout;
+import view.tabs.BaseUpdateView;
 
-public abstract class TableHandler<T extends BaseEntity> extends Layout {
+public abstract class BaseTableHandler<
+        T extends BaseEntity,
+        M extends BaseManager<T, ?>,
+        V extends BaseUpdateView<
+                ? extends BaseEntity,
+                ? extends BaseManager<
+                        ? extends BaseEntity,
+                        ? extends BaseDao<? extends BaseEntity>
+                        >
+                >
+        > extends Layout {
 
     private final String[] HEADERS;
     private final JTable table;
-    private final Manager<T> manager;
     private final DefaultTableModel defaultTableModel;
-    private final BaseUpdateView<T> view;
     private final JPopupMenu rightClickMenu;
+    private final V view;
+    private final M manager;
     private int selectedRow = -1;
 
-    public TableHandler(String[] headers, JTable table, Manager<T> manager, BaseUpdateView<T> view) {
+    public BaseTableHandler(String[] headers, JTable table, M manager, V view) {
         this.HEADERS = headers;
         this.table = table;
         this.manager = manager;
@@ -42,17 +53,21 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
     }
 
     public void initializeTable() {
-        loadTable(manager.findAll());
+        getEntities();
         populateRightClickMenu();
     }
 
-    private void setupWindowClosedListener() {
+    protected void setupWindowClosedListener() {
         view.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                loadTable(manager.findAll());
+                getEntities();
             }
         });
+    }
+
+    protected void getEntities() {
+        loadTable(getManager().findAll());
     }
 
     void setupTableMouseListener() {
@@ -79,7 +94,6 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
         rightClickMenu.add(menuItem);
     }
 
-    // crud
     public ActionListener handleAdd() {
         return e -> view.initializeUIComponents(null);
     }
@@ -88,7 +102,7 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
         return e -> {
             int selectedId = Integer.parseInt(this.getTable().getValueAt(getSelectedRow(), 0).toString());
             T entity = this.getManager().getById(selectedId);
-            getView().initializeUIComponents(entity);
+            ((BaseUpdateView<T, ?>) getView()).initializeUIComponents(entity);
         };
     }
 
@@ -104,7 +118,6 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
         }
     }
 
-    // table
     public void loadTable(ArrayList<T> entities) {
         defaultTableModel.setRowCount(0);
         defaultTableModel.setColumnIdentifiers(HEADERS);
@@ -133,7 +146,7 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
         columnModel.getColumn(0).setMaxWidth(35);
         columnModel.getColumn(0).setMinWidth(25);
         for (int column = 1; column < table.getColumnCount(); column++) {
-            int width = 25; // Min width
+            int width = 25;
             for (int row = 0; row < table.getRowCount(); row++) {
                 TableCellRenderer renderer = table.getCellRenderer(row, column);
                 Component comp = table.prepareRenderer(renderer, row, column);
@@ -144,7 +157,6 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
         }
     }
 
-    // getters
     public int getSelectedRow() {
         return selectedRow;
     }
@@ -153,11 +165,11 @@ public abstract class TableHandler<T extends BaseEntity> extends Layout {
         return table;
     }
 
-    public Manager<T> getManager() {
+    public M getManager() {
         return manager;
     }
 
-    public BaseUpdateView<T> getView() {
+    public V getView() {
         return view;
     }
 }

@@ -2,11 +2,11 @@ package view.tabs.tablehandlers;
 
 import javax.swing.*;
 
-import business.Manager;
+import business.CarManager;
 import entity.Car;
 import view.tabs.car.CarUpdateView;
 
-public class CarTableHandler extends TableHandler<Car> {
+public class CarTableHandler extends BaseTableHandler<Car, CarManager, CarUpdateView> {
 
     private static final String[] HEADERS = {
             "id",
@@ -16,8 +16,8 @@ public class CarTableHandler extends TableHandler<Car> {
             "Plate"
     };
 
-    public CarTableHandler(JTable table, Manager<Car> manager, CarUpdateView view) {
-        super(HEADERS, table, manager, view);
+    public CarTableHandler(JTable table) {
+        super(HEADERS, table, new CarManager(), new CarUpdateView());
     }
 
 }

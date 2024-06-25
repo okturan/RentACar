@@ -2,44 +2,47 @@ package business;
 
 import java.util.ArrayList;
 
-import dao.Dao;
+import dao.BaseDao;
 import entity.BaseEntity;
 
-public abstract class Manager<T extends BaseEntity> {
+public abstract class BaseManager<
+        T extends BaseEntity,
+        D extends BaseDao<T>
+        > {
 
-    final Dao<T> dao;
+    final D baseDao;
 
-    public Manager(Dao<T> dao) {
-        this.dao = dao;
+    public BaseManager(D baseDao) {
+        this.baseDao = baseDao;
     }
 
     public boolean save(T entity) {
         if (getId(entity) != 0) {
             return false;
         }
-        return dao.save(entity);
+        return baseDao.save(entity);
     }
 
     public boolean update(T entity) {
-        if (dao.findById(getId(entity)) == null) {
+        if (baseDao.findById(getId(entity)) == null) {
             return false;
         }
-        return dao.update(entity);
+        return baseDao.update(entity);
     }
 
     public boolean delete(int id) {
-        if (dao.findById(id) == null) {
+        if (baseDao.findById(id) == null) {
             return false;
         }
-        return dao.delete(id);
+        return baseDao.delete(id);
     }
 
     public T getById(int id) {
-        return dao.findById(id);
+        return baseDao.findById(id);
     }
 
     public ArrayList<T> findAll() {
-        return dao.findAll();
+        return baseDao.findAll();
     }
 
     public int getId(T entity) {

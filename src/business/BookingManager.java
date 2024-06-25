@@ -8,7 +8,7 @@ import dao.CarDao;
 import entity.Booking;
 import entity.Car;
 
-public class BookingManager extends Manager<Booking> {
+public class BookingManager extends BaseManager<Booking, BookingDao> {
 
     public BookingManager() {
         super(new BookingDao());
@@ -65,6 +65,6 @@ public class BookingManager extends Manager<Booking> {
                 "' ORDER BY b.car_id";
 
         // Execute query using DAO
-        return this.dao.selectByQuery(query);
+        return this.baseDao.selectByQuery(query);
     }
 }

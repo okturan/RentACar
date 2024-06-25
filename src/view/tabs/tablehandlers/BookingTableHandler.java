@@ -2,11 +2,11 @@ package view.tabs.tablehandlers;
 
 import javax.swing.*;
 
-import business.Manager;
+import business.BookingManager;
 import entity.Booking;
 import view.tabs.booking.BookingUpdateView;
 
-public class BookingTableHandler extends TableHandler<Booking> {
+public class BookingTableHandler extends BaseTableHandler<Booking, BookingManager, BookingUpdateView> {
 
     private static final String[] HEADERS = {
             "id",
@@ -22,8 +22,8 @@ public class BookingTableHandler extends TableHandler<Booking> {
             "Price"
     };
 
-    public BookingTableHandler(JTable table, Manager<Booking> manager, BookingUpdateView view) {
-        super(HEADERS, table, manager, view);
+    public BookingTableHandler(JTable table) {
+        super(HEADERS, table, new BookingManager(), new BookingUpdateView());
     }
 
     @Override

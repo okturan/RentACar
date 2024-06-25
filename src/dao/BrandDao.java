@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import entity.Brand;
 
-public class BrandDao extends Dao<Brand> {
+public class BrandDao extends BaseDao<Brand> {
 
     public BrandDao() {
         super("brand");

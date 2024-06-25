@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import entity.Model;
 
-public class ModelDao extends Dao<Model> {
+public class ModelDao extends BaseDao<Model> {
 
     public ModelDao() {
         super("model");

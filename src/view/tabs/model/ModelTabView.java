@@ -34,7 +34,7 @@ public class ModelTabView extends JPanel {
     public ModelTabView() {
         this.add(panel_models);
 
-        modelTableHandler = new ModelTableHandler(table_models, new ModelManager(), new ModelUpdateView());
+        modelTableHandler = new ModelTableHandler(table_models);
         modelTableHandler.initializeTable();
 
         initModelFilters();

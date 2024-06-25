@@ -2,18 +2,25 @@ package view.tabs;
 
 import javax.swing.*;
 
-import business.Manager;
+import business.BaseManager;
 import core.Helper;
+import dao.BaseDao;
 import entity.BaseEntity;
 import view.Layout;
 
-public abstract class BaseUpdateView<T extends BaseEntity> extends Layout {
-    protected final Manager<T> manager;
+public abstract class BaseUpdateView<
+        T extends BaseEntity,
+        M extends BaseManager<T, ? extends BaseDao<T>>
+        > extends Layout{
+
+    protected final M manager;
     protected JButton btn_save;
     protected JButton btn_cancel;
     protected T currentEntity;
 
-    protected BaseUpdateView(Manager<T> manager) {this.manager = manager;}
+    protected BaseUpdateView(M manager) {
+        this.manager = manager;
+    }
 
     public void setBtn_save(JButton btn_save) {
         this.btn_save = btn_save;
@@ -33,9 +40,9 @@ public abstract class BaseUpdateView<T extends BaseEntity> extends Layout {
         if (validateFields()) {
             currentEntity = setFields(currentEntity);
             if (currentEntity.getId() == 0) {
-                Helper.showMessage(manager.save(currentEntity) ? "Save Successful" : "Save Error: Erroneous entry");
+                Helper.showMessage(this.manager.save(currentEntity) ? "Save Successful" : "Save Error: Erroneous entry");
             } else {
-                Helper.showMessage(manager.update(currentEntity) ? "Update Successful" : "Update Error: Erroneous entry");
+                Helper.showMessage(this.manager.update(currentEntity) ? "Update Successful" : "Update Error: Erroneous entry");
             }
             dispose();
         } else {

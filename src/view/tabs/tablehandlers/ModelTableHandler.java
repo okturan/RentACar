@@ -1,12 +1,12 @@
 package view.tabs.tablehandlers;
 
-import javax.swing.*;
+import javax.swing.JTable;
 
-import business.Manager;
+import business.ModelManager;
 import entity.Model;
 import view.tabs.model.ModelUpdateView;
 
-public class ModelTableHandler extends TableHandler<Model> {
+public class ModelTableHandler extends BaseTableHandler<Model, ModelManager, ModelUpdateView> {
 
     private static final String[] HEADERS = {
             "id",
@@ -18,8 +18,7 @@ public class ModelTableHandler extends TableHandler<Model> {
             "Vehicle Type"
     };
 
-    public ModelTableHandler(JTable table, Manager<Model> manager, ModelUpdateView view) {
-        super(HEADERS, table, manager, view);
+    public ModelTableHandler(JTable table) {
+        super(HEADERS, table, new ModelManager(), new ModelUpdateView());
     }
-
 }

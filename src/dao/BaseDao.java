@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 import core.Db;
 import entity.BaseEntity;
 
-public abstract class Dao<T extends BaseEntity> {
+public abstract class BaseDao<T extends BaseEntity> {
 
     final Connection connection;
     private final String tableName;
     private ArrayList<String> columnNames;
     private String idColumnName;
 
-    public Dao(String tableName) {
+    public BaseDao(String tableName) {
         this.connection = Db.getInstance();
         this.tableName = tableName;
         initializeColumnData();

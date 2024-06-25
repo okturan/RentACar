@@ -12,25 +12,26 @@ import view.tabs.tablehandlers.BookingTableHandler;
 public class BookingTabView extends JPanel {
     private final BookingTableHandler bookingTableHandler;
     private JPanel panel_bookings;
-    private JPanel panel_filter_booking;
+
+    private JPanel panel_filter_bookings;
+    private JLabel lbl_booking_plate;
     private JComboBox<String> combo_booking_plates;
+
     private JButton button_booking_search;
     private JButton button_booking_clear;
-    private JLabel lbl_booking_plate;
+
     private JScrollPane scroll_bookings;
     private JTable table_bookings;
-
 
     public BookingTabView() {
         this.add(panel_bookings);
 
-        bookingTableHandler = new BookingTableHandler(table_bookings, new BookingManager(), new BookingUpdateView());
+        bookingTableHandler = new BookingTableHandler(table_bookings);
         bookingTableHandler.initializeTable();
 
         initBookingFilters();
         resetBookingFilters();
         filterBookings();
-
     }
 
     private void initBookingFilters() {

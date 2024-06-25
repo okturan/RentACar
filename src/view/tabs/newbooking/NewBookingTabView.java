@@ -1,97 +1,103 @@
 package view.tabs.newbooking;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-import business.CarManager;
-import entity.Car;
+import core.Helper;
+import dto.FilterCriteria;
 import entity.Model;
-import view.tabs.car.CarUpdateView;
 import view.tabs.tablehandlers.AvailableCarsTableHandler;
 
 public class NewBookingTabView extends JPanel {
+
+    static final Date DEFAULT_START_DATE = Helper.parseDate("2023-01-01");
+    static final Date DEFAULT_END_DATE = Helper.parseDate("2024-12-31");
     private final AvailableCarsTableHandler availableCarsTableHandler;
+    private final FilterCriteria filterCriteria;
+
     private JPanel panel_newbooking;
     private JPanel panel_filter_newbooking;
-    private JTextField fld_newbooking_startdate;
-    private JTextField fld_newbooking_enddate;
-    private JComboBox<Model.TransmissionType> combo_newbooking_transmissiontype;
-    private JComboBox<Model.FuelType> combo_newbooking_fueltype;
-    private JComboBox<Model.VehicleType> combo_newbooking_vehicletype;
-    private JButton button_newbooking_search;
-    private JButton button_newbooking_clear;
     private JLabel lbl_newbooking_startdate;
+    private JTextField fld_newbooking_startdate;
     private JLabel lbl_newbooking_enddate;
+    private JTextField fld_newbooking_enddate;
     private JLabel lbl_newbooking_transmissiontype;
+    private JComboBox<Model.TransmissionType> combo_newbooking_transmissiontype;
     private JLabel lbl_newbooking_fueltype;
+    private JComboBox<Model.FuelType> combo_newbooking_fueltype;
     private JLabel lbl_newbooking_filter_vehicletype;
+    private JComboBox<Model.VehicleType> combo_newbooking_vehicletype;
+    private JButton button_newbooking_clear;
+    private JButton button_newbooking_search;
+
+
     private JScrollPane scroll_newbooking;
     private JTable table_newbooking;
 
-
     public NewBookingTabView() {
         this.add(panel_newbooking);
+        filterCriteria = new FilterCriteria();
+        initializeFilters();
 
-        availableCarsTableHandler = new AvailableCarsTableHandler(table_newbooking, new CarManager(), new CarUpdateView());
-        availableCarsTableHandler.initializeTable();
-
-        initAvailableCarsFilters();
-
-        resetAvailableCarsFilters();
-
-        filterAvailableCars();
+        availableCarsTableHandler = new AvailableCarsTableHandler(table_newbooking, filterCriteria);
     }
 
-    // available cars filters
-    private void initAvailableCarsFilters() {
-        this.combo_newbooking_vehicletype.setModel(new DefaultComboBoxModel<>(Model.VehicleType.values()));
-        this.combo_newbooking_fueltype.setModel(new DefaultComboBoxModel<>(Model.FuelType.values()));
-        this.combo_newbooking_transmissiontype.setModel(new DefaultComboBoxModel<>(Model.TransmissionType.values()));
-
-        String defaultStartDate = "2024-01-01";
-        String defaultEndDate = "2024-12-31";
-
-        this.fld_newbooking_startdate.setText(defaultStartDate);
-        this.fld_newbooking_enddate.setText(defaultEndDate);
-
-        button_newbooking_clear.addActionListener(e -> resetAvailableCarsFilters());
-        button_newbooking_search.addActionListener(e -> filterAvailableCars());
+    private void initializeFilters() {
+        addFilterActionListeners();
+        initializeComboBoxes();
+        initializeDateFields();
     }
 
-    private void filterAvailableCars() {
-        Model.VehicleType selectedVehicleType = (Model.VehicleType) combo_newbooking_vehicletype.getSelectedItem();
-        Model.FuelType selectedFuelType = (Model.FuelType) combo_newbooking_fueltype.getSelectedItem();
-        Model.TransmissionType selectedTransmissionType = (Model.TransmissionType) combo_newbooking_transmissiontype.getSelectedItem();
-
-        String startDateStr = fld_newbooking_startdate.getText();
-        String endDateStr = fld_newbooking_enddate.getText();
-
-        // Parse the text into Date objects
-        Date startDate;
-        Date endDate;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedStartDate = sdf.parse(startDateStr);
-            java.util.Date parsedEndDate = sdf.parse(endDateStr);
-            startDate = new Date(parsedStartDate.getTime());
-            endDate = new Date(parsedEndDate.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        ArrayList<Car> filteredCars = new CarManager().filterCarsForBooking(selectedVehicleType, selectedFuelType, selectedTransmissionType, startDate, endDate);
-        availableCarsTableHandler.loadTable(filteredCars);
-
+    private void initializeComboBoxes() {
+        combo_newbooking_vehicletype.setModel(new DefaultComboBoxModel<>(Model.VehicleType.values()));
+        combo_newbooking_fueltype.setModel(new DefaultComboBoxModel<>(Model.FuelType.values()));
+        combo_newbooking_transmissiontype.setModel(new DefaultComboBoxModel<>(Model.TransmissionType.values()));
+        resetComboBoxes();
     }
 
-    private void resetAvailableCarsFilters() {
-        this.combo_newbooking_vehicletype.setSelectedItem(null);
-        this.combo_newbooking_fueltype.setSelectedItem(null);
-        this.combo_newbooking_transmissiontype.setSelectedItem(null);
+    private void initializeDateFields() {
+        fld_newbooking_startdate.setText(Helper.formatDate(DEFAULT_START_DATE));
+        fld_newbooking_enddate.setText(Helper.formatDate(DEFAULT_END_DATE));
     }
+
+    private void addFilterActionListeners() {
+        button_newbooking_clear.addActionListener(e -> clearSearch());
+        button_newbooking_search.addActionListener(e -> searchAvailableCars());
+
+        fld_newbooking_startdate.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {filterCriteria.setStartDate(Helper.parseDate(fld_newbooking_startdate.getText()));}
+            public void removeUpdate(DocumentEvent e) {}
+            public void changedUpdate(DocumentEvent e) {}
+        });
+
+        fld_newbooking_enddate.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {filterCriteria.setEndDate(Helper.parseDate(fld_newbooking_enddate.getText()));}
+            public void removeUpdate(DocumentEvent e) {}
+            public void changedUpdate(DocumentEvent e) {}
+        });
+
+        combo_newbooking_vehicletype.addActionListener(e -> filterCriteria.setVehicleType((Model.VehicleType) combo_newbooking_vehicletype.getSelectedItem()));
+        combo_newbooking_fueltype.addActionListener(e -> filterCriteria.setFuelType((Model.FuelType) combo_newbooking_fueltype.getSelectedItem()));
+        combo_newbooking_transmissiontype.addActionListener(e -> filterCriteria.setTransmissionType((Model.TransmissionType) combo_newbooking_transmissiontype.getSelectedItem()));
+    }
+
+
+    private void searchAvailableCars() {
+        availableCarsTableHandler.getEntities();
+    }
+
+    private void clearSearch() {
+        resetComboBoxes();
+        searchAvailableCars();
+    }
+
+    private void resetComboBoxes() {
+        combo_newbooking_vehicletype.setSelectedItem(null);
+        combo_newbooking_fueltype.setSelectedItem(null);
+        combo_newbooking_transmissiontype.setSelectedItem(null);
+    }
+
 }

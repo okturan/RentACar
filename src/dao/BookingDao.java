@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import business.CarManager;
 import entity.Booking;
 
-public class BookingDao extends Dao<Booking> {
+public class BookingDao extends BaseDao<Booking> {
 
     public BookingDao() {
         super("booking");

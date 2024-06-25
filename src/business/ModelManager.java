@@ -6,7 +6,7 @@ import dao.ModelDao;
 import entity.Brand;
 import entity.Model;
 
-public class ModelManager extends Manager<Model> {
+public class ModelManager extends BaseManager<Model, ModelDao> {
 
     public ModelManager() {
         super(new ModelDao());
@@ -51,6 +51,6 @@ public class ModelManager extends Manager<Model> {
 
         query.append(" ORDER BY model.name");
 
-        return this.dao.selectByQuery(query.toString());
+        return this.baseDao.selectByQuery(query.toString());
     }
 }

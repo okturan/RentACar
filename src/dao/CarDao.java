@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import entity.Car;
 
-public class CarDao extends Dao<Car> {
+public class CarDao extends BaseDao<Car> {
 
     public CarDao() {
         super("car");

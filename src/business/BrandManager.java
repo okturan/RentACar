@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import dao.BrandDao;
 import entity.Brand;
 
-public class BrandManager extends Manager<Brand> {
+public class BrandManager extends BaseManager<Brand, BrandDao> {
 
     public BrandManager() {
         super(new BrandDao());

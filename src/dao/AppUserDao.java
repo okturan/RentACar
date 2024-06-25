@@ -7,7 +7,7 @@ import java.util.Map;
 
 import entity.AppUser;
 
-public class AppUserDao extends Dao<AppUser> {
+public class AppUserDao extends BaseDao<AppUser> {
 
     public AppUserDao() {
         super("app_user");

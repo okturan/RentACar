@@ -1,13 +1,13 @@
 package business;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 import dao.CarDao;
 import entity.Car;
 import entity.Model;
 
-public class CarManager extends Manager<Car> {
+public class CarManager extends BaseManager<Car, CarDao> {
 
     public CarManager() {
         super(new CarDao());
@@ -67,7 +67,7 @@ public class CarManager extends Manager<Car> {
         query.append(" ORDER BY model.name");
 
         // Execute the query and return the results
-        return this.dao.selectByQuery(query.toString());
+        return this.baseDao.selectByQuery(query.toString());
     }
 
 }

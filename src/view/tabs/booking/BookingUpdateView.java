@@ -11,7 +11,7 @@ import entity.Booking;
 import entity.Car;
 import view.tabs.BaseUpdateView;
 
-public class BookingUpdateView extends BaseUpdateView<Booking> {
+public class BookingUpdateView extends BaseUpdateView<Booking, BookingManager> {
     private final CarManager carManager;
     private JPanel container;
     private JLabel lbl_booking;
