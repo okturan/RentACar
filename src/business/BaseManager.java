@@ -6,8 +6,8 @@ import dao.BaseDao;
 import entity.BaseEntity;
 
 public abstract class BaseManager<
-        T extends BaseEntity,
-        D extends BaseDao<T>
+        E extends BaseEntity,
+        D extends BaseDao<E>
         > {
 
     final D baseDao;
@@ -16,14 +16,14 @@ public abstract class BaseManager<
         this.baseDao = baseDao;
     }
 
-    public boolean save(T entity) {
+    public boolean save(E entity) {
         if (getId(entity) != 0) {
             return false;
         }
         return baseDao.save(entity);
     }
 
-    public boolean update(T entity) {
+    public boolean update(E entity) {
         if (baseDao.findById(getId(entity)) == null) {
             return false;
         }
@@ -37,17 +37,17 @@ public abstract class BaseManager<
         return baseDao.delete(id);
     }
 
-    public T getById(int id) {
+    public abstract ArrayList<Object[]> formatDataForTable(ArrayList<E> entities);
+
+    public E getById(int id) {
         return baseDao.findById(id);
     }
 
-    public ArrayList<T> findAll() {
+    public ArrayList<E> findAll() {
         return baseDao.findAll();
     }
 
-    public int getId(T entity) {
+    public int getId(E entity) {
         return entity.getId();
     }
-
-    public abstract ArrayList<Object[]> formatDataForTable(ArrayList<T> entities);
 }

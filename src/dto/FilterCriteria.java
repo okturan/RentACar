@@ -1,7 +1,9 @@
 package dto;
 
-import entity.Model;
 import java.util.Date;
+
+import entity.Brand;
+import entity.Model;
 
 public class FilterCriteria {
 
@@ -10,8 +12,18 @@ public class FilterCriteria {
     private Model.VehicleType vehicleType;
     private Model.FuelType fuelType;
     private Model.TransmissionType transmissionType;
+    private String Plate;
+    private Brand brand;
 
     public FilterCriteria() {}
+
+    public String getPlate() {
+        return Plate;
+    }
+
+    public void setPlate(String plate) {
+        Plate = plate;
+    }
 
     public Date getStartDate() {
         return startDate;
@@ -51,5 +63,13 @@ public class FilterCriteria {
 
     public void setTransmissionType(Model.TransmissionType transmissionType) {
         this.transmissionType = transmissionType;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }

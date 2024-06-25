@@ -1,10 +1,10 @@
-package view.tabs.tablehandlers;
+package view.tabs.brand;
 
 import javax.swing.*;
 
 import business.BrandManager;
 import entity.Brand;
-import view.tabs.brand.BrandUpdateView;
+import view.tabs.BaseTableHandler;
 
 public class BrandTableHandler extends BaseTableHandler<Brand, BrandManager, BrandUpdateView> {
 
@@ -14,6 +14,13 @@ public class BrandTableHandler extends BaseTableHandler<Brand, BrandManager, Bra
     };
 
     public BrandTableHandler(JTable table) {
-        super(HEADERS, table, new BrandManager(), new BrandUpdateView());
+        super(HEADERS, table, new BrandManager());
+        initializeTable();
+    }
+
+
+    @Override
+    protected BrandUpdateView createViewInstance() {
+        return new BrandUpdateView();
     }
 }

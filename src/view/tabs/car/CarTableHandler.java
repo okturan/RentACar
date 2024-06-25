@@ -1,10 +1,10 @@
-package view.tabs.tablehandlers;
+package view.tabs.car;
 
 import javax.swing.*;
 
 import business.CarManager;
 import entity.Car;
-import view.tabs.car.CarUpdateView;
+import view.tabs.BaseTableHandler;
 
 public class CarTableHandler extends BaseTableHandler<Car, CarManager, CarUpdateView> {
 
@@ -17,7 +17,12 @@ public class CarTableHandler extends BaseTableHandler<Car, CarManager, CarUpdate
     };
 
     public CarTableHandler(JTable table) {
-        super(HEADERS, table, new CarManager(), new CarUpdateView());
+        super(HEADERS, table, new CarManager());
+        initializeTable();
     }
 
+    @Override
+    protected CarUpdateView createViewInstance() {
+        return new CarUpdateView();
+    }
 }

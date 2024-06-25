@@ -2,9 +2,8 @@ package view.tabs.brand;
 
 import javax.swing.*;
 
-import view.tabs.tablehandlers.BrandTableHandler;
-
 public class BrandTabView extends JPanel {
+
     private final BrandTableHandler brandTableHandler;
 
     private JPanel panel_brands;
@@ -15,6 +14,5 @@ public class BrandTabView extends JPanel {
         this.add(panel_brands);
 
         brandTableHandler = new BrandTableHandler(table_brands);
-        brandTableHandler.initializeTable();
     }
 }

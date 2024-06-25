@@ -1,4 +1,4 @@
-package view.tabs.tablehandlers;
+package view.tabs;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -17,12 +17,11 @@ import business.BaseManager;
 import core.Helper;
 import dao.BaseDao;
 import entity.BaseEntity;
-import view.Layout;
-import view.tabs.BaseUpdateView;
+import view.BaseLayout;
 
 public abstract class BaseTableHandler<
-        T extends BaseEntity,
-        M extends BaseManager<T, ?>,
+        E extends BaseEntity,
+        M extends BaseManager<E, ?>,
         V extends BaseUpdateView<
                 ? extends BaseEntity,
                 ? extends BaseManager<
@@ -30,31 +29,29 @@ public abstract class BaseTableHandler<
                         ? extends BaseDao<? extends BaseEntity>
                         >
                 >
-        > extends Layout {
+        > extends BaseLayout {
 
     private final String[] HEADERS;
     private final JTable table;
     private final DefaultTableModel defaultTableModel;
     private final JPopupMenu rightClickMenu;
-    private final V view;
     private final M manager;
+    private V view;
     private int selectedRow = -1;
 
-    public BaseTableHandler(String[] headers, JTable table, M manager, V view) {
+    public BaseTableHandler(String[] headers, JTable table, M manager) {
         this.HEADERS = headers;
         this.table = table;
         this.manager = manager;
-        this.view = view;
         this.defaultTableModel = new DefaultTableModel();
         this.table.setModel(defaultTableModel);
         this.rightClickMenu = new JPopupMenu();
         setupTableMouseListener();
-        setupWindowClosedListener();
     }
 
     public void initializeTable() {
-        getEntities();
         populateRightClickMenu();
+        getEntities();
     }
 
     protected void setupWindowClosedListener() {
@@ -95,14 +92,21 @@ public abstract class BaseTableHandler<
     }
 
     public ActionListener handleAdd() {
-        return e -> view.initializeUIComponents(null);
+        return e -> {
+            view = createViewInstance();
+            view.initializeUIComponents(null);
+            setupWindowClosedListener();
+        };
     }
 
-    ActionListener handleEdit() {
+    protected ActionListener handleEdit() {
         return e -> {
             int selectedId = Integer.parseInt(this.getTable().getValueAt(getSelectedRow(), 0).toString());
-            T entity = this.getManager().getById(selectedId);
-            ((BaseUpdateView<T, ?>) getView()).initializeUIComponents(entity);
+            E entity = this.getManager().getById(selectedId);
+
+            view = createViewInstance();
+            ((BaseUpdateView<E, ?>) getView()).initializeUIComponents(entity);
+            setupWindowClosedListener();
         };
     }
 
@@ -118,7 +122,7 @@ public abstract class BaseTableHandler<
         }
     }
 
-    public void loadTable(ArrayList<T> entities) {
+    public void loadTable(ArrayList<E> entities) {
         defaultTableModel.setRowCount(0);
         defaultTableModel.setColumnIdentifiers(HEADERS);
         ArrayList<Object[]> entityRows = getManager().formatDataForTable(entities);
@@ -157,6 +161,8 @@ public abstract class BaseTableHandler<
         }
     }
 
+    protected abstract V createViewInstance();
+
     public int getSelectedRow() {
         return selectedRow;
     }
@@ -172,4 +178,9 @@ public abstract class BaseTableHandler<
     public V getView() {
         return view;
     }
+
+    public void setView(V view) {
+        this.view = view;
+    }
+
 }

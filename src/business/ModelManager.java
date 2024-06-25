@@ -13,10 +13,6 @@ public class ModelManager extends BaseManager<Model, ModelDao> {
     }
 
     public ArrayList<Object[]> formatDataForTable(ArrayList<Model> entities) {
-        return populateModelRows(entities);
-    }
-
-    private ArrayList<Object[]> populateModelRows(ArrayList<Model> entities) {
         ArrayList<Object[]> modelRows = new ArrayList<>();
         for (Model model : entities) {
             Object[] rowObject = new Object[]{

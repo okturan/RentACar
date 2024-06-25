@@ -3,6 +3,7 @@ package business;
 import java.util.Date;
 import java.util.ArrayList;
 
+import dao.BaseDao;
 import dao.CarDao;
 import entity.Car;
 import entity.Model;
@@ -14,10 +15,6 @@ public class CarManager extends BaseManager<Car, CarDao> {
     }
 
     public ArrayList<Object[]> formatDataForTable(ArrayList<Car> entities) {
-        return populateCarRows(entities);
-    }
-
-    private ArrayList<Object[]> populateCarRows(ArrayList<Car> entities) {
         ArrayList<Object[]> carRows = new ArrayList<>();
         for (Car car : entities) {
             Object[] rowObject = new Object[]{

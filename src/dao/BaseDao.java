@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import core.Db;
 import entity.BaseEntity;
 
-public abstract class BaseDao<T extends BaseEntity> {
+public abstract class BaseDao<E extends BaseEntity> {
 
     final Connection connection;
     private final String tableName;
@@ -26,9 +26,9 @@ public abstract class BaseDao<T extends BaseEntity> {
         initializeColumnData();
     }
 
-    protected abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
+    protected abstract E mapResultSetToEntity(ResultSet resultSet) throws SQLException;
 
-    protected void setParameters(PreparedStatement preparedStatement, T entity) throws SQLException {}
+    protected void setParameters(PreparedStatement preparedStatement, E entity) throws SQLException {}
 
     protected String getTableName() {
         return tableName;
@@ -38,7 +38,7 @@ public abstract class BaseDao<T extends BaseEntity> {
         return connection;
     }
 
-    protected int getId(T entity) {
+    protected int getId(E entity) {
         return entity.getId();
     }
 
@@ -70,9 +70,9 @@ public abstract class BaseDao<T extends BaseEntity> {
         }
     }
 
-    public ArrayList<T> selectByQuery(String query) {
+    public ArrayList<E> selectByQuery(String query) {
         System.out.println("Executing selectByQuery: " + query);
-        ArrayList<T> entities = new ArrayList<>();
+        ArrayList<E> entities = new ArrayList<>();
         try (Statement statement = this.connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
             while (resultSet.next()) {
                 entities.add(mapResultSetToEntity(resultSet));
@@ -83,7 +83,7 @@ public abstract class BaseDao<T extends BaseEntity> {
         return entities;
     }
 
-    public boolean save(T entity) {
+    public boolean save(E entity) {
         String query = "INSERT INTO " +
                 getTableName() +
                 " (" +
@@ -94,7 +94,7 @@ public abstract class BaseDao<T extends BaseEntity> {
         return executeQuery(query, entity, false);
     }
 
-    public boolean update(T entity) {
+    public boolean update(E entity) {
         String query = "UPDATE " +
                 getTableName() +
                 " SET " +
@@ -116,12 +116,12 @@ public abstract class BaseDao<T extends BaseEntity> {
         return false;
     }
 
-    public ArrayList<T> findAll() {
+    public ArrayList<E> findAll() {
         String query = "SELECT * FROM " + getTableName();
         return selectByQuery(query);
     }
 
-    public T findById(int id) {
+    public E findById(int id) {
         String query = "SELECT * FROM " + getTableName() + " WHERE " + getIdColumnName() + " = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
@@ -136,8 +136,8 @@ public abstract class BaseDao<T extends BaseEntity> {
         return null;
     }
 
-    public T findByColumns(Map<String, Object> columnValues) {
-        T entity = null;
+    public E findByColumns(Map<String, Object> columnValues) {
+        E entity = null;
 
         String whereClause = columnValues.keySet().stream()
                 .map(key -> key + " = ?")
@@ -164,7 +164,7 @@ public abstract class BaseDao<T extends BaseEntity> {
         return entity;
     }
 
-    private boolean executeQuery(String query, T entity, boolean isUpdate) {
+    private boolean executeQuery(String query, E entity, boolean isUpdate) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             setParameters(preparedStatement, entity);
             if (isUpdate) {

@@ -6,9 +6,9 @@ import javax.swing.*;
 
 import core.Helper;
 
-public abstract class Layout extends JFrame {
+public abstract class BaseLayout extends JFrame {
 
-    public Layout() throws HeadlessException {
+    public BaseLayout() throws HeadlessException {
     }
 
     public void guiInitialize(int xSize, int ySize) {

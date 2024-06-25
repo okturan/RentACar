@@ -1,15 +1,14 @@
 package view.tabs.booking;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
 
 import business.BookingManager;
-import entity.Booking;
-import view.tabs.tablehandlers.BookingTableHandler;
+import dto.FilterCriteria;
 
 public class BookingTabView extends JPanel {
+    private final FilterCriteria filterCriteria;
     private final BookingTableHandler bookingTableHandler;
     private JPanel panel_bookings;
 
@@ -25,31 +24,41 @@ public class BookingTabView extends JPanel {
 
     public BookingTabView() {
         this.add(panel_bookings);
+        this.filterCriteria = new FilterCriteria();
+        initializeFilters();
 
-        bookingTableHandler = new BookingTableHandler(table_bookings);
-        bookingTableHandler.initializeTable();
-
-        initBookingFilters();
-        resetBookingFilters();
-        filterBookings();
+        bookingTableHandler = new BookingTableHandler(table_bookings, filterCriteria);
     }
 
-    private void initBookingFilters() {
+    private void initializeFilters() {
+        addActionListeners();
+        initializeComboBoxes();
+    }
+
+    private void initializeComboBoxes() {
         List<String> plates = new BookingManager().loadLicensePlates();
-
         combo_booking_plates.setModel(new DefaultComboBoxModel<>(plates.toArray(new String[0])));
-
-        button_booking_search.addActionListener(e -> filterBookings());
-        button_booking_clear.addActionListener(e -> resetBookingFilters());
+        resetComboBoxes();
     }
 
-    private void filterBookings() {
-        String selectedPlate = (String) combo_booking_plates.getSelectedItem();
-        ArrayList<Booking> filteredBookings = new BookingManager().filterBookingsByLicensePlate(selectedPlate);
-        bookingTableHandler.loadTable(filteredBookings);
+    private void addActionListeners() {
+        button_booking_search.addActionListener(e -> searchBookings());
+        button_booking_clear.addActionListener(e -> clearSearch());
+
+        combo_booking_plates.addActionListener(
+                e -> filterCriteria.setPlate((String) combo_booking_plates.getSelectedItem()));
     }
 
-    private void resetBookingFilters() {
+    private void searchBookings() {
+        bookingTableHandler.getEntities();
+    }
+
+    private void clearSearch() {
+        resetComboBoxes();
+        searchBookings();
+    }
+
+    private void resetComboBoxes() {
         combo_booking_plates.setSelectedItem(null);
     }
 }

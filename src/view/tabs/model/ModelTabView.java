@@ -1,20 +1,20 @@
 package view.tabs.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
 
 import business.BrandManager;
-import business.ModelManager;
+import dto.FilterCriteria;
 import entity.Brand;
 import entity.Model;
-import view.tabs.tablehandlers.ModelTableHandler;
 
 public class ModelTabView extends JPanel {
-    private final ModelTableHandler modelTableHandler;
-    private JPanel panel_models;
 
+    private final ModelTableHandler modelTableHandler;
+    private final FilterCriteria filterCriteria;
+
+    private JPanel panel_models;
     private JPanel panel_filter_models;
     private JLabel lbl_models_brand;
     private JComboBox<Brand> combo_models_brand;
@@ -24,7 +24,6 @@ public class ModelTabView extends JPanel {
     private JComboBox<Model.TransmissionType> combo_models_transmissiontype;
     private JLabel lbl_models_vehicletype;
     private JComboBox<Model.VehicleType> combo_models_vehicletype;
-
     private JButton button_models_search;
     private JButton button_models_clear;
 
@@ -34,43 +33,52 @@ public class ModelTabView extends JPanel {
     public ModelTabView() {
         this.add(panel_models);
 
-        modelTableHandler = new ModelTableHandler(table_models);
-        modelTableHandler.initializeTable();
+        this.filterCriteria = new FilterCriteria();
+        initializeFilters();
 
-        initModelFilters();
-        resetModelFilters();
-        filterModels();
+        modelTableHandler = new ModelTableHandler(table_models, filterCriteria);
     }
 
-    // model filters
-    private void initModelFilters() {
-        this.combo_models_vehicletype.setModel(new DefaultComboBoxModel<>(Model.VehicleType.values()));
-        this.combo_models_fueltype.setModel(new DefaultComboBoxModel<>(Model.FuelType.values()));
-        this.combo_models_transmissiontype.setModel(new DefaultComboBoxModel<>(Model.TransmissionType.values()));
-
-        List<Brand> brands = new BrandManager().findAll();
-        for (Brand brand : brands) {
-            this.combo_models_brand.addItem(brand);
-        }
-
-        button_models_clear.addActionListener(e -> resetModelFilters());
-        button_models_search.addActionListener(e -> filterModels());
+    private void initializeFilters() {
+        addActionListeners();
+        initializeComboBoxes();
     }
 
-    private void filterModels() {
-        Brand selectedBrand = (Brand) combo_models_brand.getSelectedItem();
-        Model.VehicleType selectedVehicleType = (Model.VehicleType) combo_models_vehicletype.getSelectedItem();
-        Model.FuelType selectedFuel = (Model.FuelType) combo_models_fueltype.getSelectedItem();
-        Model.TransmissionType selectedTransmission = (Model.TransmissionType) combo_models_transmissiontype.getSelectedItem();
-
-        ArrayList<Model> filteredModels = new ModelManager().filterModels(selectedBrand, selectedVehicleType, selectedFuel, selectedTransmission);
-        modelTableHandler.loadTable(filteredModels);
+    private void initializeComboBoxes() {
+        combo_models_vehicletype.setModel(new DefaultComboBoxModel<>(Model.VehicleType.values()));
+        combo_models_fueltype.setModel(new DefaultComboBoxModel<>(Model.FuelType.values()));
+        combo_models_transmissiontype.setModel(new DefaultComboBoxModel<>(Model.TransmissionType.values()));
+        new BrandManager().findAll().forEach(combo_models_brand::addItem);
+        resetComboBoxes();
     }
 
-    private void resetModelFilters() {
-        this.combo_models_vehicletype.setSelectedItem(null);
-        this.combo_models_fueltype.setSelectedItem(null);
-        this.combo_models_transmissiontype.setSelectedItem(null);
-        this.combo_models_brand.setSelectedItem(null);
+    private void addActionListeners() {
+        button_models_clear.addActionListener(e -> clearSearch());
+        button_models_search.addActionListener(e -> searchModels());
+
+        combo_models_vehicletype.addActionListener(
+                e -> filterCriteria.setVehicleType((Model.VehicleType) combo_models_vehicletype.getSelectedItem()));
+        combo_models_fueltype.addActionListener(
+                e -> filterCriteria.setFuelType((Model.FuelType) combo_models_fueltype.getSelectedItem()));
+        combo_models_transmissiontype.addActionListener(
+                e -> filterCriteria.setTransmissionType((Model.TransmissionType) combo_models_transmissiontype.getSelectedItem()));
+        combo_models_brand.addActionListener(
+                e -> filterCriteria.setBrand((Brand) combo_models_brand.getSelectedItem()));
+    }
+
+    private void searchModels() {
+        modelTableHandler.getEntities();
+    }
+
+    private void clearSearch() {
+        resetComboBoxes();
+        searchModels();
+    }
+
+    private void resetComboBoxes() {
+        combo_models_vehicletype.setSelectedItem(null);
+        combo_models_fueltype.setSelectedItem(null);
+        combo_models_transmissiontype.setSelectedItem(null);
+        combo_models_brand.setSelectedItem(null);
     }
 }

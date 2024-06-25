@@ -43,7 +43,7 @@ public class BrandUpdateView extends BaseUpdateView<Brand, BrandManager> {
         this.guiInitialize(500, 500);
         this.currentEntity = brand;
 
-        fld_brand_name.setText(""); // TODO implement this for others
+       // fld_brand_name.setText(""); // TODO implement this for others
 
         if (brand != null) {
             fld_brand_name.setText(brand.getName());

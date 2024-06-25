@@ -15,10 +15,6 @@ public class BookingManager extends BaseManager<Booking, BookingDao> {
     }
 
     public ArrayList<Object[]> formatDataForTable(ArrayList<Booking> entities) {
-        return populateBookingRows(entities);
-    }
-
-    private ArrayList<Object[]> populateBookingRows(ArrayList<Booking> entities) {
         ArrayList<Object[]> bookingRows = new ArrayList<>();
         for (Booking booking : entities) {
             Object[] rowObject = new Object[]{

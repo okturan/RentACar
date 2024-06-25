@@ -6,17 +6,17 @@ import business.BaseManager;
 import core.Helper;
 import dao.BaseDao;
 import entity.BaseEntity;
-import view.Layout;
+import view.BaseLayout;
 
 public abstract class BaseUpdateView<
-        T extends BaseEntity,
-        M extends BaseManager<T, ? extends BaseDao<T>>
-        > extends Layout{
+        E extends BaseEntity,
+        M extends BaseManager<E, ? extends BaseDao<E>>
+        > extends BaseLayout {
 
     protected final M manager;
     protected JButton btn_save;
     protected JButton btn_cancel;
-    protected T currentEntity;
+    protected E currentEntity;
 
     protected BaseUpdateView(M manager) {
         this.manager = manager;
@@ -30,11 +30,11 @@ public abstract class BaseUpdateView<
         this.btn_cancel = btn_cancel;
     }
 
-    public abstract void initializeUIComponents(T entity);
+    public abstract void initializeUIComponents(E entity);
 
     protected abstract boolean validateFields();
 
-    protected abstract T setFields(T entity);
+    protected abstract E setFields(E entity);
 
     protected void save() {
         if (validateFields()) {

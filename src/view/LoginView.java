@@ -6,7 +6,7 @@ import business.AppUserManager;
 import entity.AppUser;
 
 
-public class LoginView extends Layout {
+public class LoginView extends BaseLayout {
     private final AppUserManager appUserManager;
     private JPanel container;
     private JLabel lbl_welcome;

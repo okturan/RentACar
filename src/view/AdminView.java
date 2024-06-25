@@ -9,7 +9,7 @@ import view.tabs.car.CarTabView;
 import view.tabs.model.ModelTabView;
 import view.tabs.newbooking.NewBookingTabView;
 
-public class AdminView extends Layout {
+public class AdminView extends BaseLayout {
     private JPanel container;
     private JLabel lbl_welcome;
     private JPanel pnl_top;

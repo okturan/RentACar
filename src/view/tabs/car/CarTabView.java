@@ -2,8 +2,6 @@ package view.tabs.car;
 
 import javax.swing.*;
 
-import view.tabs.tablehandlers.CarTableHandler;
-
 public class CarTabView extends JPanel {
     private final CarTableHandler carTableHandler;
 
@@ -16,6 +14,5 @@ public class CarTabView extends JPanel {
         this.add(panel_cars);
 
         carTableHandler = new CarTableHandler(table_car);
-        carTableHandler.initializeTable();
     }
 }

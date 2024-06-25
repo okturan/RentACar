@@ -9,7 +9,6 @@ import javax.swing.event.DocumentListener;
 import core.Helper;
 import dto.FilterCriteria;
 import entity.Model;
-import view.tabs.tablehandlers.AvailableCarsTableHandler;
 
 public class NewBookingTabView extends JPanel {
 
@@ -33,20 +32,20 @@ public class NewBookingTabView extends JPanel {
     private JButton button_newbooking_clear;
     private JButton button_newbooking_search;
 
-
     private JScrollPane scroll_newbooking;
     private JTable table_newbooking;
 
     public NewBookingTabView() {
         this.add(panel_newbooking);
-        filterCriteria = new FilterCriteria();
+
+        this.filterCriteria = new FilterCriteria();
         initializeFilters();
 
         availableCarsTableHandler = new AvailableCarsTableHandler(table_newbooking, filterCriteria);
     }
 
     private void initializeFilters() {
-        addFilterActionListeners();
+        addActionListeners();
         initializeComboBoxes();
         initializeDateFields();
     }
@@ -58,14 +57,16 @@ public class NewBookingTabView extends JPanel {
         resetComboBoxes();
     }
 
-    private void initializeDateFields() {
-        fld_newbooking_startdate.setText(Helper.formatDate(DEFAULT_START_DATE));
-        fld_newbooking_enddate.setText(Helper.formatDate(DEFAULT_END_DATE));
-    }
-
-    private void addFilterActionListeners() {
+    private void addActionListeners() {
         button_newbooking_clear.addActionListener(e -> clearSearch());
         button_newbooking_search.addActionListener(e -> searchAvailableCars());
+
+        combo_newbooking_vehicletype.addActionListener(
+                e -> filterCriteria.setVehicleType((Model.VehicleType) combo_newbooking_vehicletype.getSelectedItem()));
+        combo_newbooking_fueltype.addActionListener(
+                e -> filterCriteria.setFuelType((Model.FuelType) combo_newbooking_fueltype.getSelectedItem()));
+        combo_newbooking_transmissiontype.addActionListener(
+                e -> filterCriteria.setTransmissionType((Model.TransmissionType) combo_newbooking_transmissiontype.getSelectedItem()));
 
         fld_newbooking_startdate.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {filterCriteria.setStartDate(Helper.parseDate(fld_newbooking_startdate.getText()));}
@@ -79,11 +80,12 @@ public class NewBookingTabView extends JPanel {
             public void changedUpdate(DocumentEvent e) {}
         });
 
-        combo_newbooking_vehicletype.addActionListener(e -> filterCriteria.setVehicleType((Model.VehicleType) combo_newbooking_vehicletype.getSelectedItem()));
-        combo_newbooking_fueltype.addActionListener(e -> filterCriteria.setFuelType((Model.FuelType) combo_newbooking_fueltype.getSelectedItem()));
-        combo_newbooking_transmissiontype.addActionListener(e -> filterCriteria.setTransmissionType((Model.TransmissionType) combo_newbooking_transmissiontype.getSelectedItem()));
     }
 
+    private void initializeDateFields() {
+        fld_newbooking_startdate.setText(Helper.formatDate(DEFAULT_START_DATE));
+        fld_newbooking_enddate.setText(Helper.formatDate(DEFAULT_END_DATE));
+    }
 
     private void searchAvailableCars() {
         availableCarsTableHandler.getEntities();
@@ -99,5 +101,4 @@ public class NewBookingTabView extends JPanel {
         combo_newbooking_fueltype.setSelectedItem(null);
         combo_newbooking_transmissiontype.setSelectedItem(null);
     }
-
 }

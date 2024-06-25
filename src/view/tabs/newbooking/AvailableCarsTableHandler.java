@@ -1,4 +1,4 @@
-package view.tabs.tablehandlers;
+package view.tabs.newbooking;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,9 +9,11 @@ import business.CarManager;
 import dto.FilterCriteria;
 import entity.Booking;
 import entity.Car;
+import view.tabs.BaseTableHandler;
 import view.tabs.booking.BookingUpdateView;
 
 public class AvailableCarsTableHandler extends BaseTableHandler<Car, CarManager, BookingUpdateView> {
+
     private static final String[] HEADERS = {
             "id",
             "Car",
@@ -20,18 +22,12 @@ public class AvailableCarsTableHandler extends BaseTableHandler<Car, CarManager,
             "Plate"
     };
 
-    private FilterCriteria filterCriteria;
+    private final FilterCriteria filterCriteria;
 
     public AvailableCarsTableHandler(JTable table, FilterCriteria filterCriteria) {
-        super(HEADERS, table, new CarManager(), new BookingUpdateView());
+        super(HEADERS, table, new CarManager());
         this.filterCriteria = filterCriteria;
         initializeTable();
-    }
-
-    @Override
-    public void initializeTable() {
-        populateRightClickMenu();
-        getEntities();
     }
 
     @Override
@@ -55,9 +51,15 @@ public class AvailableCarsTableHandler extends BaseTableHandler<Car, CarManager,
             booking.setStartDate(filterCriteria.getStartDate());
             booking.setEndDate(filterCriteria.getEndDate());
 
+            setView(createViewInstance());
             getView().initializeUIComponents(booking);
             getView().disableFields();
         };
+    }
+
+    @Override
+    protected BookingUpdateView createViewInstance() {
+        return new BookingUpdateView();
     }
 
     public void filterAvailableCars() {

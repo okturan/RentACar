@@ -11,12 +11,7 @@ public class BrandManager extends BaseManager<Brand, BrandDao> {
         super(new BrandDao());
     }
 
-
     public ArrayList<Object[]> formatDataForTable(ArrayList<Brand> entities) {
-        return populateBrandRows(entities);
-    }
-
-    public ArrayList<Object[]> populateBrandRows(ArrayList<Brand> entities) {
         ArrayList<Object[]> brandRows = new ArrayList<>();
         for (Brand brand : entities) {
             Object[] rowObject = new Object[]{
