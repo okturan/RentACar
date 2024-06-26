@@ -1,6 +1,5 @@
 package view.tabs.newbooking;
 
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -37,24 +36,22 @@ public class AvailableCarsTableHandler extends BaseTableHandler<Car, CarManager,
 
     @Override
     public void populateRightClickMenu() {
-        addMenuItem("Add Booking", handleAdd());
+        addMenuItem("Add Booking", e -> onAdd());
     }
 
     @Override
-    public ActionListener handleAdd() {
-        return e -> {
-            int selectedId = Integer.parseInt(getTable().getValueAt(getSelectedRow(), 0).toString());
-            Car car = getManager().getById(selectedId);
+    public void onAdd() {
+        int selectedId = Integer.parseInt(getTable().getValueAt(getSelectedRow(), 0).toString());
+        Car car = getManager().getById(selectedId);
 
-            Booking booking = new Booking();
-            booking.setCar(car);
-            booking.setStartDate(filterCriteria.getStartDate());
-            booking.setEndDate(filterCriteria.getEndDate());
+        Booking booking = new Booking();
+        booking.setCar(car);
+        booking.setStartDate(filterCriteria.getStartDate());
+        booking.setEndDate(filterCriteria.getEndDate());
 
-            setView(createViewInstance());
-            getView().initializeUIComponents(booking);
-            getView().disableFields();
-        };
+        setView(createViewInstance());
+        getView().initializeUIComponents(booking);
+        getView().disableFields();
     }
 
     @Override

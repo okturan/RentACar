@@ -13,4 +13,5 @@ public class CarTabView extends JPanel {
 
         CarTableHandler carTableHandler = new CarTableHandler(table_car);
     }
+
 }

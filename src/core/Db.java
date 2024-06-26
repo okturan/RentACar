@@ -8,10 +8,12 @@ public class Db {
     private static Db instance = null;
     private Connection connection = null;
 
-    private Db() {
+    public Db() {
         try {
             String url = "jdbc:postgresql://localhost:5432/rentacar";
-            connection = DriverManager.getConnection(url);
+            String user = "postgres"; // new user
+            String password = "1234";      // new password
+            connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());

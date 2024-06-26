@@ -29,17 +29,22 @@ public class AdminView extends BaseLayout {
     private CarTabView cars_tab;
 
     public AdminView(AppUser appUser) {
-
         this.setContentPane(container);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        this.setTitle("admin");
+        this.setTitle("Admin Panel");
         guiInitialize(900, 600);
 
-        if (appUser == null) {
+        if (!appUser.getRole().equals("admin")) {
             dispose();
         }
-        lbl_welcome.setText("Welcome " + appUser.getUsername());
-    }
 
+        lbl_welcome.setText("Welcome " + appUser.getUsername());
+
+        btn_logout.addActionListener(e -> {
+            dispose();
+            new LoginView().setVisible(true);
+        });
+
+    }
 }

@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 
 import business.AppUserManager;
+import core.Helper;
 import entity.AppUser;
 
 public class LoginView extends BaseLayout {
@@ -25,24 +26,25 @@ public class LoginView extends BaseLayout {
         this.setTitle("Login");
         this.guiInitialize(350, 500);
 
-        AppUser admin = new AppUser();
-        AdminView adminView = new AdminView(admin);
-        dispose();
-
-//        btn_login.addActionListener(e -> {
-//            JTextField[] checkFieldList = {this.fld_userName, this.fld_password};
-//            if (Helper.isFieldListEmpty(checkFieldList)) {
-//                Helper.showMessage("fill");
-//            } else {
-//                AppUser loginUser = this.appUserManager.findByLogin(this.fld_userName.getText(), this.fld_password.getText());
-//                if (loginUser == null) {
-//                    Helper.showMessage("notFound");
-//                } else {
-//                    AdminView adminView = new AdminView(loginUser);
-//                    dispose();
-//                }
-//            }
-//        });
+        btn_login.addActionListener(e -> {
+            JTextField[] checkFieldList = {this.fld_userName, this.fld_password};
+            if (Helper.isFieldListEmpty(checkFieldList)) {
+                Helper.showMessage("fill");
+            } else {
+                AppUser loginUser = this.appUserManager.findByLogin(this.fld_userName.getText(),
+                                                                    new String(this.fld_password.getPassword()));
+                if (loginUser == null) {
+                    Helper.showMessage("notFound");
+                } else {
+                    if (!loginUser.getRole().equals("admin")) {
+                        Helper.showMessage("unauthorized");
+                    } else {
+                        new AdminView(loginUser);
+                        dispose();
+                    }
+                }
+            }
+        });
     }
 
 }

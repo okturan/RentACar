@@ -73,9 +73,9 @@ public abstract class BaseTableHandler<
     }
 
     protected void populateRightClickMenu() {
-        addMenuItem("Edit", handleEdit());
-        addMenuItem("Add", handleAdd());
-        addMenuItem("Delete", e -> handleDelete());
+        addMenuItem("Edit", e -> onEdit());
+        addMenuItem("Add", e -> onAdd());
+        addMenuItem("Delete", e -> onDelete());
     }
 
     protected void addMenuItem(String title, ActionListener actionListener) {
@@ -84,26 +84,22 @@ public abstract class BaseTableHandler<
         rightClickMenu.add(menuItem);
     }
 
-    public ActionListener handleAdd() {
-        return e -> {
+    public void onAdd() {
             view = createViewInstance();
             view.initializeUIComponents(null);
             setupWindowClosedListener();
-        };
     }
 
-    protected ActionListener handleEdit() {
-        return e -> {
-            int selectedId = Integer.parseInt(this.getTable().getValueAt(getSelectedRow(), 0).toString());
-            E entity = this.getManager().getById(selectedId);
+    protected void onEdit() {
+        int selectedId = Integer.parseInt(this.getTable().getValueAt(getSelectedRow(), 0).toString());
+        E entity = this.getManager().getById(selectedId);
 
-            view = createViewInstance();
-            ((BaseUpdateView<E>) getView()).initializeUIComponents(entity);
-            setupWindowClosedListener();
-        };
+        view = createViewInstance();
+        ((BaseUpdateView<E>) getView()).initializeUIComponents(entity);
+        setupWindowClosedListener();
     }
 
-    protected void handleDelete() {
+    protected void onDelete() {
         if (Helper.confirm("sure")) {
             int selectedId = Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
             if (manager.delete(selectedId)) {

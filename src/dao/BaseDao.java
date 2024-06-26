@@ -145,23 +145,22 @@ public abstract class BaseDao<E extends BaseEntity> {
 
         String query = "SELECT * FROM " + getTableName() + " WHERE " + whereClause;
 
-        try {
-            ResultSet resultSet;
-            try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
-                int index = 1;
-                for (Map.Entry<String, Object> entry : columnValues.entrySet()) {
-                    preparedStatement.setObject(index++, entry.getValue());
-                }
-                resultSet = preparedStatement.executeQuery();
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+            int index = 1;
+            for (Map.Entry<String, Object> entry : columnValues.entrySet()) {
+                preparedStatement.setObject(index++, entry.getValue());
             }
-            if (resultSet.next()) {
-                entity = mapResultSetToEntity(resultSet);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    entity = mapResultSetToEntity(resultSet);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return entity;
     }
+
 
     private boolean executeQuery(String query, E entity, boolean isUpdate) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
