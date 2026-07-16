@@ -8,28 +8,33 @@ public class Db {
     private static Db instance = null;
     private Connection connection = null;
 
-    public Db() {
+    private Db() {
+        DatabaseConfig config = DatabaseConfig.load();
+
         try {
-            String url = "jdbc:postgresql://localhost:5432/rentacar";
-            String user = "postgres"; // new user
-            String password = "1234";      // new password
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Connected to the PostgreSQL server successfully.");
+            connection = DriverManager.getConnection(
+                    config.getUrl(),
+                    config.getUser(),
+                    config.getPassword()
+            );
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new IllegalStateException(
+                    "Unable to connect to PostgreSQL. Check the database configuration and server status.",
+                    e
+            );
         }
     }
 
-    public static Connection getInstance() {
+    public static synchronized Connection getInstance() {
         try {
-            if (instance == null || instance.getConnection().isClosed()) {
+            if (instance == null || instance.connection.isClosed()) {
                 instance = new Db();
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new IllegalStateException("Unable to inspect the PostgreSQL connection.", e);
         }
 
-        return instance.getConnection();
+        return instance.connection;
     }
 
     public Connection getConnection() {

@@ -44,7 +44,7 @@ public class AppUser extends BaseEntity {
         return "AppUser{" +
                 "id=" + getId() +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='[REDACTED]'" +
                 ", role='" + role + '\'' +
                 '}';
     }

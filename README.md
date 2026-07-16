@@ -13,26 +13,31 @@ cd <repository-directory>
 
 ### Configure Database:
 
-Ensure you have a PostgreSQL database set up. Update the database connection details in `Db.java`:
+Ensure you have a PostgreSQL database set up. Import `rentacar.sql`, create a dedicated local database role, and keep its password outside the repository.
 
-```java
-String url = "jdbc:postgresql://localhost:5432/rentacar";
-String user = "postgres";
-String password = "1234";
+```sh
+cp .env.example .env
+# Fill in RENTACAR_DB_PASSWORD and adjust the URL/user if needed.
+set -a
+source .env
+set +a
 ```
 
-Use pgadmin to import rentacar.sql to your database.
+The application requires `RENTACAR_DB_URL`, `RENTACAR_DB_USER`, and `RENTACAR_DB_PASSWORD`. IntelliJ run configurations can instead set `rentacar.db.url`, `rentacar.db.user`, and `rentacar.db.password` as Java system properties. Neither `.env` nor IDE run configurations should be committed.
 
 ### Build and Run:
 
-Compile the project and run the `App.java` class.
+Compile the project with Java 14 or newer and run the `App` class. The following commands target macOS/Linux:
 
 ```sh
-javac -d bin src/**/*.java
-java -cp bin App
+mkdir -p bin
+find src -name '*.java' -print0 | xargs -0 javac --release 14 -cp postgresql-42.7.3.jar -d bin
+java -cp "bin:postgresql-42.7.3.jar" App
 ```
 
-## Test Credentials
+## Local Demo Credentials
+
+The sample database dump includes these convenience accounts for local evaluation only:
 
 ### Admin Login:
 
@@ -44,6 +49,8 @@ java -cp bin App
 - **Username:** employee
 - **Password:** 123
 
+Do not expose the sample database to a network or reuse these passwords. Replace or remove the demo accounts before using the application outside a local development environment.
+
 ## Features
 
 - Car and booking management
@@ -52,5 +59,5 @@ java -cp bin App
 
 ## Dependencies
 
-- Java
+- Java 14 or newer
 - PostgreSQL
