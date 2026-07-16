@@ -13,26 +13,45 @@ cd <repository-directory>
 
 ### Configure Database:
 
-Ensure you have a PostgreSQL database set up. Update the database connection details in `Db.java`:
+The bundled file is a PostgreSQL custom-format archive whose recorded object owner is `postgres`. For a fresh local setup, create a dedicated login/database and restore the archive while connected as that owner. Run the first two commands with an existing local PostgreSQL administrator; each command prompts for any password it needs.
 
-```java
-String url = "jdbc:postgresql://localhost:5432/rentacar";
-String user = "postgres";
-String password = "1234";
+```sh
+createuser --host=localhost --port=5432 --username=postgres \
+  --pwprompt rentacar_app
+createdb --host=localhost --port=5432 --username=postgres \
+  --owner=rentacar_app rentacar
+pg_restore --host=localhost --port=5432 --username=rentacar_app \
+  --dbname=rentacar --no-owner --no-privileges \
+  --exit-on-error --single-transaction rentacar.sql
 ```
 
-Use pgadmin to import rentacar.sql to your database.
+`pg_restore` deliberately omits `--create`, so the archive cannot replace the database created for `rentacar_app`. `--no-owner` ignores the archive's recorded `postgres` ownership, and `--no-privileges` ignores archived grants. Because the tables and sequences are restored by the database owner, no superuser runtime account or follow-up table/sequence grants are required.
+
+Copy the environment template and use the same password entered for `rentacar_app`:
+
+```sh
+cp .env.example .env
+# Fill in RENTACAR_DB_PASSWORD and adjust the URL/user if needed.
+set -a
+source .env
+set +a
+```
+
+The application requires `RENTACAR_DB_URL`, `RENTACAR_DB_USER`, and `RENTACAR_DB_PASSWORD`. IntelliJ run configurations can instead set `rentacar.db.url`, `rentacar.db.user`, and `rentacar.db.password` as Java system properties. When both forms are present, environment variables take precedence over `-D` system properties. Neither `.env` nor IDE run configurations should be committed.
 
 ### Build and Run:
 
-Compile the project and run the `App.java` class.
+Compile the project with Java 14 or newer and run the `App` class. The following commands target macOS/Linux:
 
 ```sh
-javac -d bin src/**/*.java
-java -cp bin App
+mkdir -p bin
+find src -name '*.java' -print0 | xargs -0 javac --release 14 -cp postgresql-42.7.3.jar -d bin
+java -cp "bin:postgresql-42.7.3.jar" App
 ```
 
-## Test Credentials
+## Local Demo Credentials
+
+The sample database dump includes these convenience accounts for local evaluation only:
 
 ### Admin Login:
 
@@ -44,6 +63,8 @@ java -cp bin App
 - **Username:** employee
 - **Password:** 123
 
+Do not expose the sample database to a network or reuse these passwords. Replace or remove the demo accounts before using the application outside a local development environment.
+
 ## Features
 
 - Car and booking management
@@ -52,5 +73,5 @@ java -cp bin App
 
 ## Dependencies
 
-- Java
+- Java 14 or newer
 - PostgreSQL
