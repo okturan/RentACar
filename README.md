@@ -71,6 +71,17 @@ Do not expose the sample database to a network or reuse these passwords. Replace
 - Model and brand management
 - User authentication
 
+## Verification
+
+Every push and pull request runs a least-privilege CI workflow that:
+
+- compiles the complete application and its checks against Java 14;
+- verifies environment/system-property precedence and password redaction;
+- restores the bundled, unchanged sample archive into an isolated PostgreSQL 16 database; and
+- checks the five-table domain model, primary keys, booking date rule, and the `brand -> model -> car -> booking` foreign-key chain.
+
+This makes the included sample database an executable project fixture rather than an unverified download. The workflow restores it with `--no-owner` and `--no-privileges`, matching the safe local setup above.
+
 ## Dependencies
 
 - Java 14 or newer

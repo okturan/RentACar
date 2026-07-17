@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Compile and verify sample database
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: rentacar
+          POSTGRES_USER: rentacar_app
+          POSTGRES_PASSWORD: rentacar_test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U rentacar_app -d rentacar"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGDATABASE: rentacar
+      PGUSER: rentacar_app
+      PGPASSWORD: rentacar_test_password
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.2
+
+      - name: Set up Java
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Compile application and checks
+        run: |
+          mkdir -p build/classes
+          find src test -name '*.java' -print0 \
+            | xargs -0 javac --release 14 \
+                -cp postgresql-42.7.3.jar \
+                -d build/classes
+
+      - name: Run configuration and redaction checks
+        run: java -cp "build/classes:postgresql-42.7.3.jar" core.DatabaseConfigTest
+
+      - name: Inspect and restore the sample archive
+        run: |
+          pg_restore --list rentacar.sql > build/archive-contents.txt
+          test "$(grep -c 'TABLE DATA' build/archive-contents.txt)" -eq 5
+          pg_restore \
+            --dbname=rentacar \
+            --no-owner \
+            --no-privileges \
+            --exit-on-error \
+            --single-transaction \
+            rentacar.sql
+
+      - name: Verify the restored data model
+        run: psql --set ON_ERROR_STOP=1 --file test/schema_contract.sql
