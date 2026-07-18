@@ -45,22 +45,22 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
+          cache: maven
 
-      - name: Compile application and checks
-        run: |
-          mkdir -p build/classes
-          find src test -name '*.java' -print0 \
-            | xargs -0 javac --release 14 \
-                -cp postgresql-42.7.3.jar \
-                -d build/classes
+      - name: Build instrumented application and checks
+        run: mvn --batch-mode --no-transfer-progress clean test-compile
 
       - name: Run configuration and redaction checks
-        run: java -cp "build/classes:postgresql-42.7.3.jar" core.DatabaseConfigTest
+        run: >-
+          mvn --batch-mode --no-transfer-progress exec:java
+          -Dexec.mainClass=core.DatabaseConfigTest
+          -Dexec.classpathScope=test
+          -Dexec.cleanupDaemonThreads=false
 
       - name: Inspect and restore the sample archive
         run: |
-          pg_restore --list rentacar.sql > build/archive-contents.txt
-          test "$(grep -c 'TABLE DATA' build/archive-contents.txt)" -eq 5
+          pg_restore --list rentacar.sql > target/archive-contents.txt
+          test "$(grep -c 'TABLE DATA' target/archive-contents.txt)" -eq 5
           pg_restore \
             --dbname=rentacar \
             --no-owner \
@@ -71,3 +71,15 @@ jobs:
 
       - name: Verify the restored data model
         run: psql --set ON_ERROR_STOP=1 --file test/schema_contract.sql
+
+      - name: Open the instrumented login and admin workflow
+        env:
+          RENTACAR_DB_URL: jdbc:postgresql://localhost:5432/rentacar
+          RENTACAR_DB_USER: rentacar_app
+          RENTACAR_DB_PASSWORD: rentacar_test_password
+        run: >-
+          xvfb-run --auto-servernum
+          mvn --batch-mode --no-transfer-progress exec:java
+          -Dexec.mainClass=UiBootstrapTest
+          -Dexec.classpathScope=test
+          -Dexec.cleanupDaemonThreads=false

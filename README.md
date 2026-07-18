@@ -41,13 +41,16 @@ The application requires `RENTACAR_DB_URL`, `RENTACAR_DB_USER`, and `RENTACAR_DB
 
 ### Build and Run:
 
-Compile the project with Java 14 or newer and run the `App` class. The following commands target macOS/Linux:
+Build with Java 17. Maven compiles the Java 14 target, instruments every checked-in IntelliJ GUI Designer form, and adds the required forms runtime before launching `App`:
 
 ```sh
-mkdir -p bin
-find src -name '*.java' -print0 | xargs -0 javac --release 14 -cp postgresql-42.7.3.jar -d bin
-java -cp "bin:postgresql-42.7.3.jar" App
+mvn --batch-mode --no-transfer-progress clean package
+mvn --batch-mode --no-transfer-progress exec:exec@run-app
 ```
+
+Plain `javac` compilation is insufficient for this project because the Swing
+fields are bound in the checked-in `.form` files. The Maven build performs the
+required bytecode instrumentation reproducibly outside IntelliJ IDEA.
 
 ## Local Demo Credentials
 
@@ -76,9 +79,11 @@ Do not expose the sample database to a network or reuse these passwords. Replace
 Every push and pull request runs a least-privilege CI workflow that:
 
 - compiles the complete application and its checks against Java 14;
+- instruments every IntelliJ GUI Designer form through the pinned JetBrains compiler;
 - verifies environment/system-property precedence and password redaction;
 - restores the bundled, unchanged sample archive into an isolated PostgreSQL 16 database; and
-- checks the five-table domain model, primary keys, booking date rule, and the `brand -> model -> car -> booking` foreign-key chain.
+- checks the five-table domain model, primary keys, booking date rule, and the `brand -> model -> car -> booking` foreign-key chain; and
+- opens the real Login and Admin windows under a virtual display, authenticating the documented sample administrator against the restored database.
 
 This makes the included sample database an executable project fixture rather than an unverified download. The workflow restores it with `--no-owner` and `--no-privileges`, matching the safe local setup above.
 

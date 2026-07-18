@@ -13,6 +13,7 @@ out/
 .sts4-cache
 bin/
 build/
+target/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
