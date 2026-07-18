@@ -59,8 +59,8 @@ jobs:
 
       - name: Inspect and restore the sample archive
         run: |
-          pg_restore --list rentacar.sql > build/archive-contents.txt
-          test "$(grep -c 'TABLE DATA' build/archive-contents.txt)" -eq 5
+          pg_restore --list rentacar.sql > target/archive-contents.txt
+          test "$(grep -c 'TABLE DATA' target/archive-contents.txt)" -eq 5
           pg_restore \
             --dbname=rentacar \
             --no-owner \
